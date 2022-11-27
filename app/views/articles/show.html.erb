@@ -4,3 +4,9 @@ Title: <%= @article.title %>
 <br>
 <br>
 Body: <%= @article.body %>
+
+<ul>
+  <li>
+    <%= link_to 'Edit', edit_article_path(@article) %>
+  </li>
+</ul>
