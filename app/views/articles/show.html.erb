@@ -7,6 +7,15 @@ Body: <%= @article.body %>
 
 <ul>
   <li>
-    <%= link_to 'Edit', edit_article_path(@article) %>
+    <%= link_to 'Edit', edit_article_path(@article) %><br>
+  </li>
+  <li>
+    <%= link_to 'Home', root_path %>
+  </li>
+  <li>
+    <%= link_to 'Delete', article_path, data: {
+      turbo_method: :delete,
+      turbo_confirm: 'Are you sure?'
+    } %>
   </li>
 </ul>
