@@ -1,3 +1,4 @@
+require 'byebug'
 class ArticlesController < ApplicationController
   def index
     @articles = Article.all
@@ -12,7 +13,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(title: '...', body: '...')
+    @article = Article.new(title: params[:title], body: params[:body])
 
     if @article.save
       redirect_to @article
