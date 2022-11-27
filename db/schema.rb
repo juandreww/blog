@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_135156) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_27_141347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,10 +24,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_135156) do
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
     t.text "body"
-    t.bigint "articles_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["articles_id"], name: "index_comments_on_articles_id"
+    t.bigint "article_id"
+    t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
   create_table "consoles", force: :cascade do |t|
@@ -147,7 +147,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_135156) do
     t.datetime "failsuntil", precision: nil
   end
 
-  add_foreign_key "comments", "articles", column: "articles_id"
+  add_foreign_key "comments", "articles"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "purchase_orders"
   add_foreign_key "tweets", "twitter_accounts"

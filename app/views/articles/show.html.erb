@@ -21,7 +21,7 @@ Body: <%= @article.body %>
 </ul>
 
 <h2>Comments</h2>
-<% @article.comments.each do |comment| %>
+<% @article&.comments.each do |comment| %>
   <p>
     <strong>Commenter:</strong>
     <%= comment.commenter %>
