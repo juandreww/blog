@@ -7,7 +7,10 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = Product.new do |p|
+      p.name = product_params[:name]
+      p.sku = product_params[:sku]
+    end
 
     if @product.save
       redirect_to @product

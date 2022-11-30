@@ -13,7 +13,7 @@
   <div>
     <%= form.label :sku %><br>
     <%= form.text_field :sku %>
-    <% @product.errors.full_messages_for(:body).each do |message| %>
+    <% @product.errors.full_messages_for(:sku).each do |message| %>
       <div style="color: red; font-size: 10px">
         - <%= message %>
       </div>
