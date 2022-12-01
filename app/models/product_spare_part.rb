@@ -1,0 +1,2 @@
+class ProductSparePart < ApplicationRecord
+end
