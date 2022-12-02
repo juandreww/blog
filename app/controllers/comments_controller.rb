@@ -7,10 +7,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to article_path(@article)
     else
-      respond_to do |f|
-        f.html { redirect_to article_path(@article) }
-        f.js
-      end
+      redirect_to article_path(@comment.article_id), :flash => { :error => @comment.errors.full_messages.join(', ') }
     end
   end
 
