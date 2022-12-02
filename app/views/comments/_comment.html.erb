@@ -1,4 +1,4 @@
-<% unless comment.archived? %>
+<% unless comment.archived? || comment.invalid? %>
   <p>
     <strong>Commenter:</strong>
     <%= comment.commenter %>

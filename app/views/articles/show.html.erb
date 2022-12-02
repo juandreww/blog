@@ -20,7 +20,10 @@ Body: <%= @article.body %>
   </li>
 </ul>
 
-<h2>Comments</h2>
+<% if @article.comments.size.positive? %>
+  <h2>Comments</h2>
+<% end %>
+
 <%= render @article.comments %>
 
 <h2>Add a comment:</h2>
