@@ -37,4 +37,9 @@
   <p>
     <%= form.submit %>
   </p>
+  <% flash.each do |type, message| %>
+    <div style="color: red; font-size: 10px">
+      - <%= message %>
+    </div>
+  <% end %>
 <% end %>
