@@ -2,12 +2,15 @@ class CommentsController < ApplicationController
   http_basic_authenticate_with name: 'dhh', password: 'secret', only: :destroy
   def create
     @article = Article.find(params[:article_id])
-    @comment = @article.comments.create(comment_params)
+    @comment = @article.comments.build(comment_params)
 
     if @comment.save
       redirect_to article_path(@article)
     else
-      redirect_to article_path(@comment.article_id), :flash => { :error => @comment.errors.full_messages.join(', ') }
+      respond_to do |f|
+        f.html { redirect_to article_path(@article) }
+        f.js
+      end
     end
   end
 

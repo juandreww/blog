@@ -1,4 +1,4 @@
-  <%= form_with model: [ @article, @comment ] do |form| %>
+  <%= form_with   : true, model: [ @article, @comment ] do |form| %>
   <p>
     <%= form.label :commenter %><br>
     <%= form.text_field :commenter %>
@@ -6,6 +6,11 @@
   <p>
     <%= form.label :body %><br>
     <%= form.text_area :body %>
+    <% @comment.errors.full_messages_for(:body).each do |message| %>
+      <div style="color: red; font-size: 10px">
+        - <%= message %>
+      </div>
+    <% end %>
   </p>
   <p>
     <%= form.label :email %><br>
