@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  http_basic_authenticate_with name: 'dhh', password: 'secret', only: :destroy
+  http_basic_authenticate_with name: "dhh", password: "secret", only: :destroy
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.build(comment_params)
@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to article_path(@article)
     else
-      render 'articles/show', status: :unprocessable_entity
+      render "articles/show", status: :unprocessable_entity
       # redirect_to article_path(@comment.article_id), flash: { error: @comment.errors.full_messages.join(', ') }
     end
   end
