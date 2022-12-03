@@ -80,7 +80,7 @@ RSpec.describe Article, type: :model do
       article_2 = Article.new(article_params)
       article_2.save
 
-      expect(article.invalid?).to be_truthy
+      expect(article_2.invalid?).to be_truthy
       expect(article_2.errors.full_messages[0]).to eq("Title has already been taken")
     end
   end
