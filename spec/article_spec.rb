@@ -5,7 +5,7 @@ RSpec.describe Article, type: :model do
     {
       title: "Rose, Queen of Flower", body: "Minimum is 10 characters", eula: true,
       status: Article.status_public, start_hour: "08:00:00", end_hour: "17:00:00",
-      code: "bKzXCO", url: "rails.com"
+      code: "bKzXCO", url: "rails.com", total_comments: 10
     }
   end
 
@@ -58,6 +58,17 @@ RSpec.describe Article, type: :model do
 
       expect(article.invalid?).to be_truthy
       expect(article.errors.full_messages[0]).to eq("Code only allows letters")
+    end
+  end
+
+  context 'total_comments contains letter' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.total_comments = "20 comments"
+      article.save
+
+      expect(article.invalid?).to be_truthy
+      expect(article.errors.full_messages[0]).to eq("Total comments is not a number")
     end
   end
 end
