@@ -12,8 +12,12 @@ class Article < ApplicationRecord
   validate :url_exclusion
 
   def url_exclusion
-    forbid = %w[www us ca jp]
+    forbidden_list = %w[www us ca jp]
 
-    errors.add(:url, :exclusion) if forbid.find { |w| url.include?(w) }
+    forbidden_list.find do |forbid|
+      next unless url.include?(forbid)
+
+      errors.add(:url, :exclusion)
+    end
   end
 end
