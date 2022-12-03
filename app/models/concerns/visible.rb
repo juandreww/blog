@@ -13,6 +13,18 @@ module Visible
     def public_count
       where(status: "public").count
     end
+
+    def status_public
+      "public"
+    end
+
+    def status_private
+      "private"
+    end
+
+    def status_archived
+      "archived"
+    end
   end
 
   def archived?
