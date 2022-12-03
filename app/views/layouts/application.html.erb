@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <style>
-      ul {
+      .article > .show > .action  ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -17,11 +17,11 @@
         background-color: #333333;
       }
 
-      li {
+      .article > .show > .action li {
         float: left;
       }
 
-      li a {
+      .article > .show > .action li a {
         display: block;
         color: white;
         text-align: center;
@@ -29,7 +29,7 @@
         text-decoration: none;
       }
 
-      li a:hover {
+      .article > .show > .action li a:hover {
         background-color: #111111;
       }
     </style>

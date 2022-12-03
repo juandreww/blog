@@ -1,23 +1,48 @@
-<%= form_with model: [ @article, @comment = @article.comments.build ] do |form| %>
+<%= form_with model: [ @article, @comment ] do |form| %>
   <p>
     <%= form.label :commenter %><br>
     <%= form.text_field :commenter %>
+    <% @comment.errors.full_messages_for(:commenter).each do |message| %>
+      <div style="color: red; font-size: 10px">
+        - <%= message %>
+      </div>
+    <% end %>
   </p>
   <p>
     <%= form.label :body %><br>
     <%= form.text_area :body %>
+    <% @comment.errors.full_messages_for(:body).each do |message| %>
+      <div style="color: red; font-size: 10px">
+        - <%= message %>
+      </div>
+    <% end %>
   </p>
   <p>
     <%= form.label :email %><br>
     <%= form.text_field :email %>
+    <% @comment.errors.full_messages_for(:email).each do |message| %>
+      <div style="color: red; font-size: 10px">
+        - <%= message %>
+      </div>
+    <% end %>
   </p>
   <p>
     <%= form.label :email_confirmation %><br>
     <%= form.text_field :email_confirmation %>
+    <% @comment.errors.full_messages_for(:email_confirmation).each do |message| %>
+      <div style="color: red; font-size: 10px">
+        - <%= message %>
+      </div>
+    <% end %>
   </p>
   <p>
     <%= form.label :status %><br>
     <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+    <% @comment.errors.full_messages_for(:status).each do |message| %>
+      <div style="color: red; font-size: 10px">
+        - <%= message %>
+      </div>
+    <% end %>
   </p>
   <p>
     <%= form.submit %>
