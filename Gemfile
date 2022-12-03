@@ -55,6 +55,8 @@ group :development, :test do
   gem 'byebug'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '>=  3.9.0'
+  gem 'rubocop'
+  gem 'rubocop-rails'
 end
 
 group :development do
@@ -75,5 +77,5 @@ group :test do
   gem 'webdrivers'
 end
 
-gem 'rubocop'
-gem 'rubocop-rails'
+gem 'factory_bot_rails'
+gem 'factory_girl_rails'
