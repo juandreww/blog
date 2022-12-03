@@ -10,6 +10,7 @@ class Article < ApplicationRecord
   }
   validates :start_hour, comparison: { less_than_or_equal_to: :end_hour }
   validate :url_exclusion
+  validates :code, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
 
   def url_exclusion
     forbidden_list = %w[www us ca jp]
