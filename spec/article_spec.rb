@@ -1,18 +1,25 @@
 require "rails_helper"
 
 RSpec.describe Article, type: :model do
-  let(:article) { create(:article, title: "Rose, Queen of Flower", body: "Minimum is 10 characters", eula: true,
-                          status: Article.status_public, start_hour: "08:00:00", end_hour: "17:00:00",
-                          code: "bKzXCO", url: "rails.com") }
+  def article_params
+    {
+      title: "Rose, Queen of Flower", body: "Minimum is 10 characters", eula: true,
+      status: Article.status_public, start_hour: "08:00:00", end_hour: "17:00:00",
+      code: "bKzXCO", url: "rails.com"
+    }
+  end
 
   context 'valid attributes' do
     it "is valid with valid attributes" do
+      article = Article.new(article_params)
+      article.save
       expect(article).to be_valid
     end
   end
 
   context 'start_hour not specified' do
     it "throws error" do
+      article = Article.new(article_params)
       article.start_hour = nil
       article.save
 
@@ -23,6 +30,7 @@ RSpec.describe Article, type: :model do
 
   context 'start_hour is greater than end_hour' do
     it "throws error" do
+      article = Article.new(article_params)
       article.start_hour = "20:00:00"
       article.save
 
@@ -33,9 +41,10 @@ RSpec.describe Article, type: :model do
 
   context 'url has www' do
     it "throws error" do
+      article = Article.new(article_params)
       article.url = "www.yahoo.us"
       article.save
-      byebug
+
       expect(article.invalid?).to be_truthy
       expect(article.errors.full_messages[0]).to eq("Url is reserved")
     end
@@ -43,6 +52,7 @@ RSpec.describe Article, type: :model do
 
   context 'article_code contains number' do
     it "throws error" do
+      article = Article.new(article_params)
       article.code = "article_001"
       article.save
 
