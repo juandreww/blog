@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  def index
-  end
+  def index; end
 
   def new
     @product = Product.new
