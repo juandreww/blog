@@ -7,14 +7,18 @@ class Article < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   validates :title, presence: true, uniqueness: { scope: :url, message: "should happen once per url" }
-  validates :body, presence: true, length: { minimum: 10 }
+  validates :body, length: { minimum: 10, message: "must have more than 10 characters" }
   validates :eula, acceptance: {
     message: "must be abided"
   }
   validates :start_hour, comparison: { less_than_or_equal_to: :end_hour }
   validate :url_exclusion
   validates :code, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
-  validates :total_comments, numericality: true
+  validates :total_comments, numericality: true, allow_blank: true
+
+  validates_each :title do |record, attr, value|
+    record.errors.add(attr, "must start with upper case") if value =~ /\A[[:lower:]]/
+  end
 
   def url_exclusion
     forbidden_list = %w[www us ca jp]

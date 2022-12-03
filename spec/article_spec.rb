@@ -109,6 +109,7 @@ RSpec.describe Article, type: :model do
   context 'body contains banned words' do
     it "throws error" do
       article = Article.new(article_params)
+      article.body = "BLACK IS THE WAY"
       article.save
 
       comment = Comment.new(comment_params)
@@ -116,8 +117,60 @@ RSpec.describe Article, type: :model do
       comment.article_id = article.id
       comment.save
 
+      expect(article.invalid?).to be_truthy
+      expect(article.errors.full_messages[0]).to eq("Some words is banned!")
+
       expect(comment.invalid?).to be_truthy
       expect(comment.errors.full_messages[0]).to eq("Some words is banned!")
+    end
+  end
+
+  context 'title first character is not uppercase' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.title = article.title.downcase
+      article.save
+
+      expect(article.invalid?).to be_truthy
+      expect(article.errors.full_messages[0]).to eq("Title must start with upper case")
+    end
+  end
+
+  context 'total comments is blank' do
+    it "is valid" do
+      article = Article.new(article_params)
+      article.total_comments = nil
+      article.save
+
+      expect(article.valid?).to be_truthy
+    end
+  end
+
+  context 'body has less than 10 characters' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.body = 'yucks'
+      article.save
+
+      expect(article.invalid?).to be_truthy
+      expect(article.errors.full_messages[0]).to eq("Body must have more than 10 characters")
+    end
+  end
+
+  context 'commenter is nil when update' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = Comment.new(comment_params)
+      comment.article_id = article.id
+      comment.commenter = nil
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.valid?).to be_truthy
+
+      # expect(comment.errors.full_messages[0]).to eq("Some words is banned!")
     end
   end
 end
