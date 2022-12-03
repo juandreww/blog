@@ -1,7 +1,8 @@
-# frozen_string_literal: true
+require_relative "./validator/banned_words"
 
 class Comment < ApplicationRecord
   include Visible
+  validates_with BannedWords
 
   belongs_to :article
 

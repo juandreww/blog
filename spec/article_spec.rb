@@ -9,6 +9,16 @@ RSpec.describe Article, type: :model do
     }
   end
 
+  def comment_params
+    {
+      commenter: "Yoshitaka Edo",
+      body: "It is a very touching article",
+      email: "edo_yosh9k@gmail.com",
+      email_confirmation: "edo_yosh9k@gmail.com",
+      status: Article.status_public
+    }
+  end
+
   context 'valid attributes' do
     it "is valid with valid attributes" do
       article = Article.new(article_params)
@@ -81,7 +91,33 @@ RSpec.describe Article, type: :model do
       article_2.save
 
       expect(article_2.invalid?).to be_truthy
-      expect(article_2.errors.full_messages[0]).to eq("Title has already been taken")
+      expect(article_2.errors.full_messages[0]).to eq("Title should happen once per url")
+    end
+
+    it "is valid" do
+      article = Article.new(article_params)
+      article.save
+
+      article_2 = Article.new(article_params)
+      article_2.url = 'go_rails.com'
+      article_2.save
+
+      expect(article_2).to be_valid
+    end
+  end
+
+  context 'body contains banned words' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = Comment.new(comment_params)
+      comment.body = "It's the black guy"
+      comment.article_id = article.id
+      comment.save
+
+      expect(comment.invalid?).to be_truthy
+      expect(comment.errors.full_messages[0]).to eq("Some words is banned!")
     end
   end
 end

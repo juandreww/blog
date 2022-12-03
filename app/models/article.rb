@@ -1,9 +1,12 @@
+require_relative "./validator/banned_words"
+
 class Article < ApplicationRecord
   include Visible
+  validates_with BannedWords
 
   has_many :comments, dependent: :destroy
 
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true, uniqueness: { scope: :url, message: "should happen once per url" }
   validates :body, presence: true, length: { minimum: 10 }
   validates :eula, acceptance: {
     message: "must be abided"
