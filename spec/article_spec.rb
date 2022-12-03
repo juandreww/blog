@@ -71,4 +71,17 @@ RSpec.describe Article, type: :model do
       expect(article.errors.full_messages[0]).to eq("Total comments is not a number")
     end
   end
+
+  context 'title is found not unique' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+
+      article_2 = Article.new(article_params)
+      article_2.save
+
+      expect(article.invalid?).to be_truthy
+      expect(article_2.errors.full_messages[0]).to eq("Title has already been taken")
+    end
+  end
 end
