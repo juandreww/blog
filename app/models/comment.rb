@@ -21,6 +21,8 @@ class Comment < ApplicationRecord
     article.total_comments = article.total_comments.to_i + 1 if article.present?
   end
 
+  before_destroy :insert_into_log
+
   def body_valid?
     return body.length > 10 if body.present?
 
@@ -35,5 +37,10 @@ class Comment < ApplicationRecord
 
   def ensure_country_has_value
     self.country = "Indonesia" if country.blank?
+  end
+
+  def insert_into_log
+    Log.create(body: "Deleted Article: #{article.id}")
+    Log.create(body: "Deleted Comment: #{id}")
   end
 end

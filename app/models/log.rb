@@ -1,2 +1,2 @@
-class Log < ApplicationController
+class Log < ApplicationRecord
 end
