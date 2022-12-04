@@ -270,7 +270,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'article frequence tobe found will be +1' do
+  context 'article frequency tobe found will be +1' do
     it "is valid" do
       article = Article.new(article_params)
       article.save
@@ -281,14 +281,14 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'article frequence tobe found will be +1' do
-    it "throws error" do
+  context 'touch changed updated_at' do
+    it "is valid" do
       article = Article.new(article_params)
       article.save
-      expect(article.frequency_to_be_found.to_i).to eq(0)
+      initial_updated_at = article.updated_at
 
-      article = Article.find(article.id)
-      expect(article.frequency_to_be_found.to_i).to eq(1)
+      article.touch
+      expect(initial_updated_at).to be <= article.updated_at
     end
   end
 end
