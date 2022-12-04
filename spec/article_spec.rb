@@ -236,7 +236,7 @@ RSpec.describe Article, type: :model do
   end
 
   context 'country inject value before validation' do
-    it "throws error" do
+    it "is valid" do
       article = Article.new(article_params)
       article.save
 
@@ -254,7 +254,7 @@ RSpec.describe Article, type: :model do
   end
 
   context 'article total comment will be +1' do
-    it "throws error" do
+    it "is valid" do
       article = Article.new(article_params)
       article.save
       expect(article.total_comments).to eq(article_params[:total_comments].to_s)
@@ -267,6 +267,17 @@ RSpec.describe Article, type: :model do
       expect(article.valid?).to be_truthy
       expect(comment.valid?).to be_truthy
       expect(article.total_comments).to eq((article_params[:total_comments].to_i + 1).to_s)
+    end
+  end
+
+  context 'article frequence tobe found will be +1' do
+    it "is valid" do
+      article = Article.new(article_params)
+      article.save
+      expect(article.frequency_to_be_found.to_i).to eq(0)
+
+      article = Article.find(article.id)
+      expect(article.frequency_to_be_found.to_i).to eq(1)
     end
   end
 
