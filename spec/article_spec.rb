@@ -305,8 +305,9 @@ RSpec.describe Article, type: :model do
       expect(comment.valid?).to be_truthy
 
       article.destroy
-      byebug
       expect(Log.all.size).to eq(2)
+      expect(Article.all.size).to eq(0)
+      expect(Comment.all.size).to eq(0)
     end
   end
 end
