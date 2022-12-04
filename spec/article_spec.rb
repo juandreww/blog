@@ -270,7 +270,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'article frequency tobe found will be +1' do
+  context 'article frequency to be found will be +1' do
     it "is valid" do
       article = Article.new(article_params)
       article.save
@@ -281,7 +281,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'touch changed updated_at' do
+  context 'when touch changed field updated_at' do
     it "is valid" do
       article = Article.new(article_params)
       article.save
