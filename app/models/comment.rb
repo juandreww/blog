@@ -3,6 +3,7 @@ require_relative "./validator/banned_words"
 class Comment < ApplicationRecord
   include Visible
   validates_with BannedWords
+  before_validation :ensure_country_has_value
 
   belongs_to :article
 
@@ -16,6 +17,10 @@ class Comment < ApplicationRecord
     validates :body, presence: true, length: { minimum: 40 }
   end
 
+  after_initialize do
+    article.total_comments = article.total_comments.to_i + 1
+  end
+
   def body_valid?
     return body.length > 10 if body.present?
 
@@ -24,5 +29,11 @@ class Comment < ApplicationRecord
 
   def status_archived?
     status == "archived"
+  end
+
+  private
+
+  def ensure_country_has_value
+    self.country = "Indonesia" if country.blank?
   end
 end

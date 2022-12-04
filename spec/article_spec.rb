@@ -234,4 +234,39 @@ RSpec.describe Article, type: :model do
       expect(comment.errors.full_messages[0]).to eq("Body is too short (minimum is 40 characters)")
     end
   end
+
+  context 'country inject value before validation' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = Comment.new(comment_params)
+      comment.article_id = article.id
+      comment.status = 'private'
+      comment.body_characters_count = comment.body.length
+      expect(comment.country).to eq(nil)
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.valid?).to be_truthy
+      expect(comment.country).to eq('Indonesia')
+    end
+  end
+
+  context 'article total comment will be +1' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+      expect(article.total_comments).to eq(article_params[:total_comments].to_s)
+
+      comment = article.comments.new(comment_params)
+      comment.status = 'private'
+      comment.body_characters_count = comment.body.length
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.valid?).to be_truthy
+      expect(article.total_comments).to eq((article_params[:total_comments].to_i + 1).to_s)
+    end
+  end
 end

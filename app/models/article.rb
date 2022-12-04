@@ -11,18 +11,15 @@ class Article < ApplicationRecord
   validates :eula, acceptance: {
     message: "must be abided"
   }
-
   validates :start_hour, comparison: { less_than_or_equal_to: :end_hour }
   validate :url_exclusion
   validates :code, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
   validates :total_comments, numericality: true, allow_blank: true
+  validates :end_hour, presence: { strict: true }
 
   validates_each :title do |record, attr, value|
     record.errors.add(attr, "must start with upper case") if value =~ /\A[[:lower:]]/
   end
-
-  validates :end_hour, presence: { strict: true }
-
 
   def url_exclusion
     forbidden_list = %w[www us ca jp]
