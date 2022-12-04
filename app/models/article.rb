@@ -20,7 +20,7 @@ class Article < ApplicationRecord
     record.errors.add(attr, "must start with upper case") if value =~ /\A[[:lower:]]/
   end
 
-  validates :end_hour, presence: { strict: :start_hour }
+  validates :end_hour, presence: { strict: true }
 
   def url_exclusion
     forbidden_list = %w[www us ca jp]
