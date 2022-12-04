@@ -168,6 +168,7 @@ RSpec.describe Article, type: :model do
       comment = Comment.new(it_comment_params)
       # before update it is expected to be truthy
       comment.article_id = article.id
+      byebug
       expect(comment.valid?).to be_truthy
 
       comment.save
@@ -190,6 +191,47 @@ RSpec.describe Article, type: :model do
       article.save
 
       expect(article.valid?).to be_truthy
+    end
+  end
+
+  context 'body has counter' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = Comment.new(comment_params)
+      comment.article_id = article.id
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.invalid?).to be_truthy
+      expect(comment.errors.full_messages[0]).to eq("Body characters count can't be blank")
+
+      comment.body_characters_count = comment.body.length
+      comment.save
+      expect(comment.valid?).to be_truthy
+    end
+  end
+
+  context 'status changed to present' do
+    it "throws error" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = Comment.new(comment_params)
+      comment.article_id = article.id
+      comment.status = 'private'
+      comment.body_characters_count = comment.body.length
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.valid?).to be_truthy
+
+      comment.status = 'archived'
+      comment.save
+
+      expect(comment.invalid?).to be_truthy
+      expect(comment.errors.full_messages[0]).to eq("Body is too short (minimum is 40 characters)")
     end
   end
 end

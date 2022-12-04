@@ -23,6 +23,7 @@ class Article < ApplicationRecord
 
   validates :end_hour, presence: { strict: true }
 
+
   def url_exclusion
     forbidden_list = %w[www us ca jp]
 
