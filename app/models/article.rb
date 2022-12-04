@@ -11,7 +11,8 @@ class Article < ApplicationRecord
   validates :eula, acceptance: {
     message: "must be abided"
   }
-  # validates :start_hour, comparison: { less_than_or_equal_to: :end_hour }
+
+  validates :start_hour, comparison: { less_than_or_equal_to: :end_hour }
   validate :url_exclusion
   validates :code, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
   validates :total_comments, numericality: true, allow_blank: true

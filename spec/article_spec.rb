@@ -162,15 +162,19 @@ RSpec.describe Article, type: :model do
       article = Article.new(article_params)
       article.save
 
-      comment = Comment.new(comment_params)
+      it_comment_params = comment_params
+      it_comment_params[:commenter] = nil
+
+      comment = Comment.new(it_comment_params)
+      # before update it is expected to be truthy
       comment.article_id = article.id
-      comment.commenter = nil
+      expect(comment.valid?).to be_truthy
+
       comment.save
 
       expect(article.valid?).to be_truthy
-      expect(comment.valid?).to be_truthy
-
-      # expect(comment.errors.full_messages[0]).to eq("Some words is banned!")
+      expect(comment.invalid?).to be_truthy
+      expect(comment.errors.full_messages[0]).to eq("Commenter can't be blank")
     end
   end
 
