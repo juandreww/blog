@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_04_132642) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_04_135912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_132642) do
     t.string "code"
     t.string "total_comments"
     t.integer "frequency_to_be_found"
+  end
+
+  create_table "bank_accounts", force: :cascade do |t|
+    t.bigint "supplier_id", null: false
+    t.integer "account_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supplier_id"], name: "index_bank_accounts_on_supplier_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -140,6 +148,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_132642) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tweets", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "twitter_account_id", null: false
@@ -175,6 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_132642) do
     t.datetime "failsuntil", precision: nil
   end
 
+  add_foreign_key "bank_accounts", "suppliers"
   add_foreign_key "comments", "articles"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "purchase_orders"
