@@ -21,6 +21,10 @@ class Article < ApplicationRecord
     record.errors.add(attr, "must start with upper case") if value =~ /\A[[:lower:]]/
   end
 
+  after_find do
+    self.frequency_to_be_found = frequency_to_be_found.to_i + 1
+  end
+
   def url_exclusion
     forbidden_list = %w[www us ca jp]
 

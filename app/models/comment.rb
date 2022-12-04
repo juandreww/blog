@@ -18,7 +18,7 @@ class Comment < ApplicationRecord
   end
 
   after_initialize do
-    article.total_comments = article.total_comments.to_i + 1
+    article.total_comments = article.total_comments.to_i + 1 if article.present?
   end
 
   def body_valid?
