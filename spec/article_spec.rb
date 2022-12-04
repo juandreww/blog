@@ -291,4 +291,18 @@ RSpec.describe Article, type: :model do
       expect(initial_updated_at).to be <= article.updated_at
     end
   end
+
+  context 'add log when article, comments deleted' do
+    it "is valid" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = article.comments.new(comment_params)
+      comment.body_characters_count = comment.body.length
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.valid?).to be_truthy
+    end
+  end
 end

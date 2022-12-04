@@ -1,4 +1,5 @@
 require_relative "./validator/banned_words"
+require_relative "./log"
 
 class Article < ApplicationRecord
   include Visible
@@ -25,6 +26,8 @@ class Article < ApplicationRecord
     self.frequency_to_be_found = frequency_to_be_found.to_i + 1
   end
 
+  before_destroy :insert_into_log
+
   def url_exclusion
     forbidden_list = %w[www us ca jp]
 
@@ -32,6 +35,13 @@ class Article < ApplicationRecord
       next unless url&.include?(forbid)
 
       errors.add(:url, :exclusion)
+    end
+  end
+
+  def insert_into_log
+    Log.create(body: "Deleted Article: #{id}")
+    comments.each do |cmt|
+      Log.create(body: "Deleted Comment: #{cmt.id}")
     end
   end
 end
