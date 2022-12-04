@@ -168,7 +168,7 @@ RSpec.describe Article, type: :model do
       comment = Comment.new(it_comment_params)
       # before update it is expected to be truthy
       comment.article_id = article.id
-      byebug
+      comment.body_characters_count = comment.body.length
       expect(comment.valid?).to be_truthy
 
       comment.save
