@@ -173,4 +173,19 @@ RSpec.describe Article, type: :model do
       # expect(comment.errors.full_messages[0]).to eq("Some words is banned!")
     end
   end
+
+  context 'body has less than 10 characters' do
+    it "throws error" do
+      article = Article.new(title: "Rose, Queen of Flower", body: "Minimum is 10 characters", eula: true,
+                            status: Article.status_public, start_hour: "08:00:00",
+                            code: "bKzXCO", url: "rails.com", total_comments: 10)
+      byebug
+      article.body = 'yucks'
+      article.save
+      byebug
+
+      expect(article.invalid?).to be_truthy
+      expect(article.errors.full_messages[0]).to eq("Body must have more than 10 characters")
+    end
+  end
 end
