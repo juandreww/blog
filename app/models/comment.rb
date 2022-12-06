@@ -25,6 +25,7 @@ class Comment < ApplicationRecord
 
   def body_valid?
     return body.length > 10 if body.present?
+
     false
   end
 
