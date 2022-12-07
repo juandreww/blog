@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_04_135912) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_014755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_135912) do
     t.string "fulfillment_fee"
     t.string "float"
     t.float "unit_cost", default: 0.0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "journalists", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -146,6 +152,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_135912) do
     t.string "ship_to_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "release_schedules", force: :cascade do |t|
+    t.string "title"
+    t.date "date"
+    t.bigint "journalist_id"
+    t.bigint "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_release_schedules_on_article_id"
+    t.index ["journalist_id"], name: "index_release_schedules_on_journalist_id"
   end
 
   create_table "suppliers", force: :cascade do |t|

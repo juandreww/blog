@@ -6,6 +6,8 @@ class Article < ApplicationRecord
   validates_with BannedWords
 
   has_many :comments, dependent: :destroy
+  has_many :release_schedules, dependent: :nullify
+  has_many :journalist, through: :release_schedules
 
   validates :title, presence: true, uniqueness: { scope: :url, message: "should happen once per url" }
   validates :body, length: { minimum: 10, message: "must have more than 10 characters" }
