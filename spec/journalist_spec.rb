@@ -156,12 +156,23 @@ RSpec.describe Journalist, type: :model do
   end
 
   context 'when journalist have certificate' do
-    it "is valid" do
+    it "is valid (example 1)" do
       journalist = Journalist.new(journalist_params)
       journalist.save
       expect(journalist.valid?).to be_truthy
 
       certificate = HistoriesJournalists::Certificate.new(certificate_params)
+      certificate.journalist = journalist
+      certificate.save
+      expect(certificate.valid?).to be_truthy
+    end
+
+    it "is valid (example 2)" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+      expect(journalist.valid?).to be_truthy
+
+      certificate = journalist.certificates.new(certificate_params)
       certificate.save
       expect(certificate.valid?).to be_truthy
     end
