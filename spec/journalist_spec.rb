@@ -46,6 +46,12 @@ RSpec.describe Journalist, type: :model do
     }
   end
 
+  def certificate_params
+    {
+      title: "Engineer Novice Class"
+    }
+  end
+
   context 'when journalist has three articles' do
     it "is valid" do
       journalist = Journalist.new(journalist_params)
@@ -138,9 +144,26 @@ RSpec.describe Journalist, type: :model do
 
       subordinate = journalist.subordinates.new(journalist_params)
       subordinate.name = "#{subordinate.name} Subordinate"
+      expect(journalist.subordinates.reload).to eq([])
       subordinate.save
+
+      subordinate.name = "Don Bosch"
+      expect(journalist.subordinates.reload.first.name).to eq("#{journalist.name} Subordinate")
+
       expect(subordinate.manager_id).to eq(journalist.id)
       expect(subordinate.manager.name).to eq(journalist.name)
+    end
+  end
+
+  context 'when journalist have certificate' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+      expect(journalist.valid?).to be_truthy
+
+      certificate = HistoriesJournalists::Certificate.new(certificate_params)
+      certificate.save
+      expect(certificate.valid?).to be_truthy
     end
   end
 end
