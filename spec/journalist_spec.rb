@@ -40,6 +40,12 @@ RSpec.describe Journalist, type: :model do
     }
   end
 
+  def picture_params
+    {
+      name: "Image001"
+    }
+  end
+
   context 'when journalist has three articles' do
     it "is valid" do
       journalist = Journalist.new(journalist_params)
@@ -99,6 +105,29 @@ RSpec.describe Journalist, type: :model do
       end
 
       expect(journalist.companies.size).to eq(2)
+    end
+  end
+
+  context 'when journalist and company owns pictures' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      company = journalist.companies.new(company_params)
+      company.save
+
+      journalist.companies << company
+
+      expect(journalist.valid?).to be_truthy
+      expect(company.valid?).to be_truthy
+
+      journalist_pic = journalist.pictures.new(picture_params)
+      journalist_pic.save
+      expect(journalist_pic.valid?).to be_truthy
+
+      company_pic = company.pictures.new(picture_params)
+      company_pic.save
+      expect(company_pic.valid?).to be_truthy
     end
   end
 end
