@@ -205,4 +205,21 @@ RSpec.describe Journalist, type: :model do
       expect(certificate.journalist_previously_changed?).to be_truthy
     end
   end
+
+  context 'journalist updated_at updated when certificate updates' do
+    it "is valid" do
+      certificate = HistoriesJournalists::Certificate.new(certificate_params)
+      certificate.save
+      expect(certificate.invalid?).to be_truthy
+      certificate_beginning_updated_at = certificate.updated_at
+      sleep(1)
+
+      certificate.build_journalist(journalist_params)
+      expect(certificate.journalist_changed?).to be_truthy
+
+      certificate.save
+      expect(certificate.updated_at).to_not eq(certificate_beginning_updated_at)
+      expect(certificate.journalist_previously_changed?).to be_truthy
+    end
+  end
 end
