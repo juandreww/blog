@@ -22,6 +22,18 @@ RSpec.describe Journalist, type: :model do
     }
   end
 
+  def device_params
+    {
+      device_number: "QG-9002NF"
+    }
+  end
+
+  def account_params
+    {
+      username: "account_tester"
+    }
+  end
+
   context 'when journalist has three articles' do
     it "is valid" do
       journalist = Journalist.new(journalist_params)
@@ -43,6 +55,24 @@ RSpec.describe Journalist, type: :model do
 
       expect(journalist.valid?).to be_truthy
       expect(Article.all.size).to eq(3)
+    end
+  end
+
+  context 'when journalist has one account' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      device = journalist.device.new(device_params)
+      device.save
+
+      account = device.account.new(account_params)
+      account.save
+
+      expect(journalist.valid?).to be_truthy
+      expect(device.valid?).to be_truthy
+      expect(account.valid?).to be_truthy
+      expect(journalist.account.present?).to be_truthy
     end
   end
 end

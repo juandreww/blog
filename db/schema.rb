@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_07_014755) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_003456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "username"
+    t.bigint "device_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_accounts_on_device_id"
+  end
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -57,6 +65,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_014755) do
     t.string "manufacturer", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.string "device_number"
+    t.bigint "journalist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journalist_id"], name: "index_devices_on_journalist_id"
   end
 
   create_table "employees", id: :uuid, default: nil, force: :cascade do |t|
