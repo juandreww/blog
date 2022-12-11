@@ -34,6 +34,12 @@ RSpec.describe Journalist, type: :model do
     }
   end
 
+  def company_params
+    {
+      name: "the great runchise"
+    }
+  end
+
   context 'when journalist has three articles' do
     it "is valid" do
       journalist = Journalist.new(journalist_params)
@@ -75,6 +81,20 @@ RSpec.describe Journalist, type: :model do
       expect(device.valid?).to be_truthy
       expect(account.valid?).to be_truthy
       expect(journalist.account.present?).to be_truthy
+    end
+  end
+
+  context 'when journalist works in 2 companies' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+      expect(journalist.valid?).to be_truthy
+
+      2.times do |index|
+        company = journalist.companies.new(company_params)
+        company.save
+        expect(company.valid?).to be_truthy
+      end
     end
   end
 end
