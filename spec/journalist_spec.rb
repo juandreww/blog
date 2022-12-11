@@ -228,10 +228,13 @@ RSpec.describe Journalist, type: :model do
       journalist = Journalist.new(journalist_params)
       journalist.save
 
-      picture = Picture.new(picture_params)
-      picture.journalist = journalist
-      picture.save
-      expect(picture.valid?).to be_truthy
+      picture_jpg = PictureJpg.new(picture_params)
+      picture_jpg.imageable = journalist
+      picture_jpg.save
+
+      expect(picture_jpg.valid?).to be_truthy
+      expect(picture_jpg.type).to eq('PictureJpg')
+      byebug
     end
   end
 end
