@@ -177,4 +177,32 @@ RSpec.describe Journalist, type: :model do
       expect(certificate.valid?).to be_truthy
     end
   end
+
+  context '(inverse) when journalist have subordinates' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      subordinate = journalist.subordinates.new(journalist_params)
+      subordinate.name = "#{subordinate.name} Subordinate"
+      subordinate.save
+
+      journalist.name = "Don Bosch"
+      expect(journalist.name).to eq(subordinate.manager.name)
+    end
+  end
+
+  context 'belongs to journalist' do
+    it "is valid" do
+      certificate = HistoriesJournalists::Certificate.new(certificate_params)
+      certificate.save
+      expect(certificate.invalid?).to be_truthy
+
+      certificate.build_journalist(journalist_params)
+      expect(certificate.journalist_changed?).to be_truthy
+
+      certificate.save
+      expect(certificate.journalist_previously_changed?).to be_truthy
+    end
+  end
 end
