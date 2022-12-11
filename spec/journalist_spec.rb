@@ -93,8 +93,12 @@ RSpec.describe Journalist, type: :model do
       2.times do |index|
         company = journalist.companies.new(company_params)
         company.save
+
+        journalist.companies << company
         expect(company.valid?).to be_truthy
       end
+
+      expect(journalist.companies.size).to eq(2)
     end
   end
 end
