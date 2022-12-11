@@ -130,4 +130,17 @@ RSpec.describe Journalist, type: :model do
       expect(company_pic.valid?).to be_truthy
     end
   end
+
+  context 'when journalist have subordinates' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      subordinate = journalist.subordinates.new(journalist_params)
+      subordinate.name = "#{subordinate.name} Subordinate"
+      subordinate.save
+      expect(subordinate.manager_id).to eq(journalist.id)
+      expect(subordinate.manager.name).to eq(journalist.name)
+    end
+  end
 end

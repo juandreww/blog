@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_11_075119) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_075915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_075119) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "manager_id"
+    t.index ["manager_id"], name: "index_journalists_on_manager_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -249,6 +251,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_075119) do
 
   add_foreign_key "bank_accounts", "suppliers"
   add_foreign_key "comments", "articles"
+  add_foreign_key "journalists", "journalists", column: "manager_id"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "purchase_orders"
   add_foreign_key "tweets", "twitter_accounts"
