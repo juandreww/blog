@@ -1,3 +1,3 @@
-class Device < ApplicationRecord
+class Account < ApplicationRecord
   belongs_to :device
 end

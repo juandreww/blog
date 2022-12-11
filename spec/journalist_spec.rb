@@ -63,10 +63,12 @@ RSpec.describe Journalist, type: :model do
       journalist = Journalist.new(journalist_params)
       journalist.save
 
-      device = journalist.device.new(device_params)
+      device = Device.new(device_params)
+      device.journalist_id = journalist.id
       device.save
 
-      account = device.account.new(account_params)
+      account = Account.new(account_params)
+      account.device_id = device.id
       account.save
 
       expect(journalist.valid?).to be_truthy
