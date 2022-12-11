@@ -222,4 +222,16 @@ RSpec.describe Journalist, type: :model do
       expect(certificate.journalist_previously_changed?).to be_truthy
     end
   end
+
+  context 'when picture is jpeg' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      picture = Picture.new(picture_params)
+      picture.journalist = journalist
+      picture.save
+      expect(picture.valid?).to be_truthy
+    end
+  end
 end
