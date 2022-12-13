@@ -234,6 +234,20 @@ RSpec.describe Journalist, type: :model do
 
       expect(picture_jpg.valid?).to be_truthy
       expect(picture_jpg.type).to eq('PictureJpg')
+    end
+  end
+
+  context 'using query find' do
+    it "is valid" do
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      picture_jpg = PictureJpg.new(picture_params)
+      picture_jpg.imageable = journalist
+      picture_jpg.save
+
+      expect(picture_jpg.valid?).to be_truthy
+      expect(picture_jpg.type).to eq('PictureJpg')
       byebug
     end
   end
