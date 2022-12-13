@@ -242,13 +242,21 @@ RSpec.describe Journalist, type: :model do
       journalist = Journalist.new(journalist_params)
       journalist.save
 
-      picture_jpg = PictureJpg.new(picture_params)
-      picture_jpg.imageable = journalist
-      picture_jpg.save
+      journalist_2 = Journalist.new(journalist_params)
+      journalist_2.save
 
-      expect(picture_jpg.valid?).to be_truthy
-      expect(picture_jpg.type).to eq('PictureJpg')
-      byebug
+      expect(journalist.valid?).to be_truthy
+      expect(journalist_2.valid?).to be_truthy
+
+      journalists = Journalist.find([journalist.id, journalist_2.id])
+      expect(journalists.size).to eq(2)
+      expect(journalists.class).to eq(Array)
+    end
+
+    it "is not valid" do
+      journalists = Journalist.find([1, 2])
+    rescue ActiveRecord::RecordNotFound
+      expect(journalists.present?).to be_falsey
     end
   end
 end
