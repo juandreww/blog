@@ -262,7 +262,6 @@ RSpec.describe Journalist, type: :model do
 
   context 'using query take' do
     it "is valid" do
-      
       journalist = Journalist.new(journalist_params)
       journalist.save
 
@@ -272,8 +271,8 @@ RSpec.describe Journalist, type: :model do
       expect(journalist.valid?).to be_truthy
       expect(journalist_2.valid?).to be_truthy
 
-      journalists = Journalist.take
-      byebug
+      journalist_take = Journalist.take
+      expect(journalist_take).to eq(Journalist.first)
     end
 
     it "is not valid" do
