@@ -261,22 +261,28 @@ RSpec.describe Journalist, type: :model do
   end
 
   context 'using query take' do
-    it "is valid" do
-      journalist = Journalist.new(journalist_params)
-      journalist.save
-
-      journalist_2 = Journalist.new(journalist_params)
-      journalist_2.save
-
-      expect(journalist.valid?).to be_truthy
-      expect(journalist_2.valid?).to be_truthy
+    it "is valid when take 1" do
+      10.times do
+        journalist = Journalist.new(journalist_params)
+        journalist.save
+      end
 
       journalist_take = Journalist.take
       expect(journalist_take).to eq(Journalist.first)
     end
 
+    it "is valid when take 3" do
+      10.times do
+        journalist = Journalist.new(journalist_params)
+        journalist.save
+      end
+
+      journalist_take = Journalist.take(3)
+      expect(journalist_take).to eq([Journalist.first, Journalist.second, Journalist.third])
+    end
+
     it "is not valid" do
-      journalists = Journalist.find([1, 2])
+      journalists = Journalist.first!
     rescue ActiveRecord::RecordNotFound
       expect(journalists.present?).to be_falsey
     end
