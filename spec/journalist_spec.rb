@@ -259,4 +259,27 @@ RSpec.describe Journalist, type: :model do
       expect(journalists.present?).to be_falsey
     end
   end
+
+  context 'using query take' do
+    it "is valid" do
+      
+      journalist = Journalist.new(journalist_params)
+      journalist.save
+
+      journalist_2 = Journalist.new(journalist_params)
+      journalist_2.save
+
+      expect(journalist.valid?).to be_truthy
+      expect(journalist_2.valid?).to be_truthy
+
+      journalists = Journalist.take
+      byebug
+    end
+
+    it "is not valid" do
+      journalists = Journalist.find([1, 2])
+    rescue ActiveRecord::RecordNotFound
+      expect(journalists.present?).to be_falsey
+    end
+  end
 end
