@@ -271,18 +271,27 @@ RSpec.describe Journalist, type: :model do
       expect(journalist_take).to eq(Journalist.first)
     end
 
-    it "is valid when take 3" do
-      10.times do
+    it "is not valid" do
+      journalists = Journalist.take!
+    rescue ActiveRecord::RecordNotFound
+      expect(journalists.present?).to be_falsey
+    end
+  end
+
+  context 'using query last' do
+    it "is valid when using last" do
+      10.times do |index|
         journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
         journalist.save
       end
 
-      journalist_take = Journalist.take(3)
-      expect(journalist_take).to eq([Journalist.first, Journalist.second, Journalist.third])
+      journalist_last = Journalist.last
+      expect(journalist_last.name).to eq("Axel Romero 9")
     end
 
     it "is not valid" do
-      journalists = Journalist.first!
+      journalists = Journalist.last!
     rescue ActiveRecord::RecordNotFound
       expect(journalists.present?).to be_falsey
     end
