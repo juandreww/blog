@@ -290,6 +290,17 @@ RSpec.describe Journalist, type: :model do
       expect(journalist_last.name).to eq("Axel Romero 9")
     end
 
+    it "is valid when using last and ordered by name" do
+      10.downto(1) do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.save
+      end
+
+      journalist_last = Journalist.order(:name).last
+      expect(journalist_last.name).to eq("Axel Romero 9")
+    end
+
     it "is not valid" do
       journalists = Journalist.last!
     rescue ActiveRecord::RecordNotFound
