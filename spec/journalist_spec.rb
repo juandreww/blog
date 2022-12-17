@@ -516,4 +516,187 @@ RSpec.describe Journalist, type: :model do
       expect(journalists.last.salary).to eq(0.7e8)
     end
   end
+
+  context 'using having' do
+    it "is valid when using having" do
+      salary = 30_000_000
+
+      10.times do |index|
+        is_odd_or_even = index % 2 == 0 ? 'odd' : 'even'
+
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{is_odd_or_even}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .group(:name, :salary)
+                              .having('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.map(&:name).tally['Axel Romero odd']).to eq(3)
+      expect(journalists.map(&:name).tally['Axel Romero even']).to eq(3)
+      expect(journalists.first.salary).to eq(0.12e9)
+      expect(journalists.last.salary).to eq(0.7e8)
+    end
+  end
+
+  context 'using overriding unscope' do
+    it "is valid when using unscope" do
+      salary = 30_000_000
+
+      10.times do |index|
+        is_odd_or_even = index % 2 == 0 ? 'odd' : 'even'
+
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{is_odd_or_even}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.first.salary).to eq(120_000_000)
+      expect(journalists.unscope(:order)
+                        .order(salary: :asc)
+                        .first.salary).to eq(70_000_000)
+    end
+  end
+
+  context 'using overriding only' do
+    it "is valid when using only" do
+      salary = 30_000_000
+
+      10.times do |index|
+        is_odd_or_even = index % 2 == 0 ? 'odd' : 'even'
+
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{is_odd_or_even}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.last.salary).to eq(70_000_000)
+      expect(journalists.only(:order)
+                        .last.salary).to eq(30_000_000)
+    end
+  end
+
+  context 'using override reselect' do
+    it "is valid when using reselect" do
+      salary = 30_000_000
+
+      10.times do |index|
+        is_odd_or_even = index % 2 == 0 ? 'odd' : 'even'
+
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{is_odd_or_even}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.last.salary).to eq(70_000_000)
+      expect { journalists.reselect(:name)
+                          .last.salary }
+                          .to raise_error(ActiveModel::MissingAttributeError)
+    end
+  end
+
+  context 'using override reorder' do
+    it "is valid when using reorder" do
+      salary = 150_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary -= 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.first.name).to eq('Axel Romero 0')
+      expect(journalists.reorder(name: :desc)
+                        .first.salary)
+                        .to eq(70_000_000)
+    end
+  end
+
+  context 'using override reverse_order' do
+    it "is valid when using reverse_order" do
+      salary = 150_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary -= 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.first.name).to eq('Axel Romero 0')
+      expect(journalists.reverse_order
+                        .first.name)
+                        .to eq('Axel Romero 8')
+    end
+  end
+
+  context 'using override rewhere' do
+    it "is valid when using rewhere" do
+      salary = 150_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary -= 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.size).to eq(9)
+      expect(journalists.rewhere(salary: 100_000_000)
+                        .size)
+                        .to eq(1)
+    end
+  end
 end
