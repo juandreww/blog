@@ -329,8 +329,184 @@ RSpec.describe Journalist, type: :model do
         journalist.save
       end
 
-      journalists = Journalist.where("name like ?", '%' + Journalist.sanitize_sql_like('Axel Romero') + '%')
-      expect(journalists.size).to eq(10)
+      journalists = Journalist.where(id: 2..5)
+      expect(journalists.first.id).to eq(2)
+      expect(journalists.last.id).to eq(5)
+      expect(journalists.size).to eq(4)
+    end
+
+    it "is valid when using hash range of salary" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.where(salary: 50_000_000..80_000_000)
+      expect(journalists.first.salary).to eq(50_000_000)
+      expect(journalists.last.salary).to eq(80_000_000)
+      expect(journalists.size).to eq(4)
+    end
+  end
+
+  context 'using condition hash range greater than' do
+    it "is valid when using hash range" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.where(salary: 50_000_000..)
+      expect(journalists.first.salary).to eq(50_000_000)
+      expect(journalists.size).to eq(8)
+    end
+  end
+
+  context 'using condition hash range less than' do
+    it "is valid when using hash range" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.where(salary: ..50_000_000)
+      expect(journalists.first.salary).to eq(30_000_000)
+      expect(journalists.size).to eq(3)
+    end
+  end
+
+  context 'using condition hash IN' do
+    it "is valid when using hash IN" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.where(salary: [40_000_000, 60_000_000])
+      expect(journalists.size).to eq(2)
+    end
+  end
+
+  context 'using select' do
+    it "is valid when using select" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary).where(salary: [40_000_000, 60_000_000])
+      expect(journalists.map(&:name)).to eq(['Axel Romero 1', 'Axel Romero 3'])
+    end
+  end
+
+  context 'using limit' do
+    it "is valid when using limit" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary).where(salary: 50_000_000..).limit(3)
+      expect(journalists.map(&:name)).to eq(['Axel Romero 2', 'Axel Romero 3', 'Axel Romero 4'])
+    end
+  end
+
+  context 'using limit and offset' do
+    it "is valid when using limit and offset" do
+      salary = 30_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary).where(salary: 50_000_000..).limit(3).offset(2)
+      expect(journalists.map(&:name)).to eq(['Axel Romero 4', 'Axel Romero 5', 'Axel Romero 6'])
+    end
+  end
+
+  context 'using group' do
+    it "is valid when using group count" do
+      salary = 30_000_000
+
+      10.times do |index|
+        is_odd_or_even = index % 2 == 0 ? 'odd' : 'even'
+
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{is_odd_or_even}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.group(:name).count
+      expect(journalists['Axel Romero odd']).to eq(5)
+      expect(journalists['Axel Romero even']).to eq(5)
+    end
+  end
+
+  context 'using having' do
+    it "is valid when using having" do
+      salary = 30_000_000
+
+      10.times do |index|
+        is_odd_or_even = index % 2 == 0 ? 'odd' : 'even'
+
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{is_odd_or_even}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary).group(:name, :salary).having('salary > ?', 60_000_000)
+      expect(journalists.)
     end
   end
 end
