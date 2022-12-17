@@ -307,4 +307,17 @@ RSpec.describe Journalist, type: :model do
       expect(journalists.present?).to be_falsey
     end
   end
+
+  context 'using query like' do
+    it "is valid when using sanitize_sql_like" do
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.save
+      end
+
+      journalists = Journalist.where("name like ?", '%' + Journalist.sanitize_sql_like('Axel Romero') + '%')
+      expect(journalists.size).to eq(10)
+    end
+  end
 end
