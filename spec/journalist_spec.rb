@@ -505,8 +505,15 @@ RSpec.describe Journalist, type: :model do
         salary += 10_000_000
       end
 
-      journalists = Journalist.select(:name, :salary).group(:name, :salary).having('salary > ?', 60_000_000)
-      expect(journalists.)
+      journalists = Journalist.select(:name, :salary)
+                              .group(:name, :salary)
+                              .having('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.map(&:name).tally['Axel Romero odd']).to eq(3)
+      expect(journalists.map(&:name).tally['Axel Romero even']).to eq(3)
+      expect(journalists.first.salary).to eq(0.12e9)
+      expect(journalists.last.salary).to eq(0.7e8)
     end
   end
 end
