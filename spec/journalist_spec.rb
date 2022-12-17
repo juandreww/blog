@@ -732,4 +732,50 @@ RSpec.describe Journalist, type: :model do
               .to raise_error(ActiveRecord::ReadOnlyRecord)
     end
   end
+
+  context 'using optimistic locking' do
+    it "is valid when using optimistic locking" do
+      salary = 150_000_000
+
+      journalist = Journalist.new(journalist_params)
+      journalist.salary = salary
+      journalist.save
+
+      j1 = Journalist.find(journalist.id)
+      j2 = Journalist.find(journalist.id)
+
+      expect(j1.lock_version).to eq(0)
+      j1.name = 'Axel Rodriguez'
+      j1.save
+      expect(j1.lock_version).to eq(1)
+
+      j2.name = 'Jack Domriguez'
+      expect { j2.save }
+              .to raise_error(ActiveRecord::StaleObjectError)
+    end
+  end
+
+  context 'using pessimistic locking' do
+    it "is valid when using pessimistic locking" do
+      salary = 150_000_000
+
+      journalist = Journalist.new(journalist_params)
+      journalist.salary = salary
+      journalist.save
+
+      Journalist.transaction do
+        journalist = Journalist.lock.first
+        journalist.name = 'Michael Faraday'
+        journalist.save!
+        expect(journalist.valid?).to be_truthy
+      end
+
+      Post.transaction do
+        journalist = Post.lock.first
+        journalist.title = 'Michael Faraday'
+        journalist.user_id = 2
+        journalist.save!
+      end
+    end
+  end
 end

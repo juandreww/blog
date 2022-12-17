@@ -310,4 +310,18 @@ RSpec.describe Article, type: :model do
       expect(Comment.all.size).to eq(0)
     end
   end
+
+  context 'using joins' do
+    it "is valid" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = article.comments.new(comment_params)
+      comment.body_characters_count = comment.body.length
+      comment.save
+
+      expect(article.valid?).to be_truthy
+      expect(comment.valid?).to be_truthy
+    end
+  end
 end
