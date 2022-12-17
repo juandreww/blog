@@ -322,19 +322,6 @@ RSpec.describe Journalist, type: :model do
   end
 
   context 'using condition hash range' do
-    it "is valid when using hash range" do
-      10.times do |index|
-        journalist = Journalist.new(journalist_params)
-        journalist.name = "#{journalist.name} #{index}"
-        journalist.save
-      end
-
-      journalists = Journalist.where(id: 2..5)
-      expect(journalists.first.id).to eq(2)
-      expect(journalists.last.id).to eq(5)
-      expect(journalists.size).to eq(4)
-    end
-
     it "is valid when using hash range of salary" do
       salary = 30_000_000
 
@@ -697,6 +684,52 @@ RSpec.describe Journalist, type: :model do
       expect(journalists.rewhere(salary: 100_000_000)
                         .size)
                         .to eq(1)
+    end
+  end
+
+  context 'using override null' do
+    it "is valid when using null" do
+      salary = 150_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary -= 10_000_000
+      end
+
+      journalists = Journalist.select(:name, :salary)
+                              .where('salary > ?', 60_000_000)
+                              .order(salary: :desc)
+
+      expect(journalists.size).to eq(9)
+      expect(journalists.rewhere(salary: 100_000_000)
+                        .size)
+                        .to eq(1)
+    end
+  end
+
+  context 'using readonly objects' do
+    it "is valid when using readonly objects" do
+      salary = 150_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary -= 10_000_000
+      end
+
+      journalist = Journalist.readonly.first
+      journalist.name = 'Changi Airport'
+      expect { journalist.save }
+              .to raise_error(ActiveRecord::ReadOnlyRecord)
     end
   end
 end
