@@ -778,4 +778,57 @@ RSpec.describe Journalist, type: :model do
       end
     end
   end
+
+  context 'using scope' do
+    it "returns a staff with low salary" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalists = Journalist.low_salary
+      expect(journalists.size).to eq(1)
+    end
+
+    it "returns list of staffs with medium salary" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalists = Journalist.medium_salary
+      expect(journalists.size).to eq(3)
+    end
+
+    it "returns list of staffs with high salary" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalists = Journalist.high_salary
+      expect(journalists.size).to eq(7)
+    end
+  end
 end

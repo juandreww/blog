@@ -9,4 +9,8 @@ class Journalist < ApplicationRecord
 
   has_one :device, dependent: :nullify
   has_one :account, through: :device
+
+  scope :low_salary, -> { where("salary < 40000000") }
+  scope :medium_salary, -> { where("salary < 80000000") }
+  scope :high_salary, -> { where("salary >= 80000000") }
 end
