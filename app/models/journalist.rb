@@ -13,4 +13,8 @@ class Journalist < ApplicationRecord
   scope :low_salary, -> { where("salary < 40000000") }
   scope :medium_salary, -> { where("salary < 80000000") }
   scope :high_salary, -> { where("salary >= 80000000") }
+  scope :salary_more_than, ->(amount) { where("salary >= ?", amount) }
+  scope :salary_less_than, ->(amount) { where("salary <= ?", amount) }
+
+  enum :status, { inactive: 0, active: 1 }
 end

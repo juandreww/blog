@@ -1,4 +1,5 @@
 require "rails_helper"
+require "bigdecimal"
 
 RSpec.describe Journalist, type: :model do
   def article_params
@@ -829,6 +830,94 @@ RSpec.describe Journalist, type: :model do
 
       journalists = Journalist.high_salary
       expect(journalists.size).to eq(7)
+    end
+
+    it "returns list of staffs with salary specified" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalists = Journalist.salary_more_than(50_000_000)
+      expect(journalists.size).to eq(8)
+    end
+
+    it "returns list of staffs with salary more & less than" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalists = Journalist.salary_more_than(50_000_000)
+                              .salary_less_than(80_000_000)
+      expect(journalists.size).to eq(2)
+    end
+  end
+
+  context 'using dynamic finders' do
+    it "returns a staff with name Lolita" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+
+        journalist.salary = salary
+        if index == 5
+          journalist.name = 'Lolita'
+          journalist.salary = 27_500_500
+        end
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalist = Journalist.find_by_name('Lolita')
+      expect(journalist.salary).to eq(27_500_500)
+      expect(journalist.name).to eq('Lolita')
+    end
+  end
+
+  context 'using enum' do
+    it "returns a staff with status Active" do
+      salary = 20_000_000
+
+      10.times do |index|
+        journalist = Journalist.new(journalist_params)
+        journalist.name = "#{journalist.name} #{index}"
+        journalist.salary = salary
+        journalist.status = index % 2
+        journalist.save
+        expect(journalist.present?).to be_truthy
+
+        salary += 20_000_000
+      end
+
+      journalist = Journalist.where(status: Journalist.statuses[:active]).first
+      expect(journalist.active?).to be_truthy
+      expect(journalist.inactive?).to be_falsey
+
+      journalist = Journalist.inactive.first
+      expect(journalist.inactive?).to be_truthy
+      expect(journalist.active?).to be_falsey
+
+      journalist.active!
+      expect(journalist.active?).to be_truthy
     end
   end
 end
