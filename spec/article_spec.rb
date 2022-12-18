@@ -11,15 +11,15 @@ RSpec.describe Article, type: :model do
 
   def comment_params
     {
-      commenter: "Yoshitaka Edo",
-      body: "It is a very touching article",
-      email: "edo_yosh9k@gmail.com",
+      commenter:          "Yoshitaka Edo",
+      body:               "It is a very touching article",
+      email:              "edo_yosh9k@gmail.com",
       email_confirmation: "edo_yosh9k@gmail.com",
-      status: Article.status_public
+      status:             Article.status_public
     }
   end
 
-  context 'valid attributes' do
+  context "valid attributes" do
     it "is valid with valid attributes" do
       article = Article.new(article_params)
       article.save
@@ -27,7 +27,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'start_hour not specified' do
+  context "start_hour not specified" do
     it "throws error" do
       article = Article.new(article_params)
       article.start_hour = nil
@@ -38,7 +38,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'start_hour is greater than end_hour' do
+  context "start_hour is greater than end_hour" do
     it "throws error" do
       article = Article.new(article_params)
       article.start_hour = "20:00:00"
@@ -49,7 +49,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'url has www' do
+  context "url has www" do
     it "throws error" do
       article = Article.new(article_params)
       article.url = "www.yahoo.us"
@@ -60,7 +60,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'article_code contains number' do
+  context "article_code contains number" do
     it "throws error" do
       article = Article.new(article_params)
       article.code = "article_001"
@@ -71,7 +71,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'total_comments contains letter' do
+  context "total_comments contains letter" do
     it "throws error" do
       article = Article.new(article_params)
       article.total_comments = "20 comments"
@@ -82,7 +82,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'title is found not unique' do
+  context "title is found not unique" do
     it "throws error" do
       article = Article.new(article_params)
       article.save
@@ -99,14 +99,14 @@ RSpec.describe Article, type: :model do
       article.save
 
       article_2 = Article.new(article_params)
-      article_2.url = 'go_rails.com'
+      article_2.url = "go_rails.com"
       article_2.save
 
       expect(article_2).to be_valid
     end
   end
 
-  context 'body contains banned words' do
+  context "body contains banned words" do
     it "throws error" do
       article = Article.new(article_params)
       article.body = "BLACK IS THE WAY"
@@ -125,7 +125,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'title first character is not uppercase' do
+  context "title first character is not uppercase" do
     it "throws error" do
       article = Article.new(article_params)
       article.title = article.title.downcase
@@ -136,7 +136,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'total comments is blank' do
+  context "total comments is blank" do
     it "is valid" do
       article = Article.new(article_params)
       article.total_comments = nil
@@ -146,10 +146,10 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'body has less than 10 characters' do
+  context "body has less than 10 characters" do
     it "throws error" do
       article = Article.new(article_params)
-      article.body = 'yucks'
+      article.body = "yucks"
       article.save
 
       expect(article.invalid?).to be_truthy
@@ -157,7 +157,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'commenter is nil when update' do
+  context "commenter is nil when update" do
     it "throws error" do
       article = Article.new(article_params)
       article.save
@@ -179,7 +179,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'end_hour is blank, then value is assigned' do
+  context "end_hour is blank, then value is assigned" do
     it "throws error first, then valid" do
       article = Article.new(title: "Rose, Queen of Flower", body: "Minimum is 10 characters", eula: true,
                             status: Article.status_public, start_hour: "08:00:00",
@@ -194,7 +194,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'body has counter' do
+  context "body has counter" do
     it "throws error" do
       article = Article.new(article_params)
       article.save
@@ -213,21 +213,21 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'status changed to present' do
+  context "status changed to present" do
     it "throws error" do
       article = Article.new(article_params)
       article.save
 
       comment = Comment.new(comment_params)
       comment.article_id = article.id
-      comment.status = 'private'
+      comment.status = "private"
       comment.body_characters_count = comment.body.length
       comment.save
 
       expect(article.valid?).to be_truthy
       expect(comment.valid?).to be_truthy
 
-      comment.status = 'archived'
+      comment.status = "archived"
       comment.save
 
       expect(comment.invalid?).to be_truthy
@@ -235,32 +235,32 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'country inject value before validation' do
+  context "country inject value before validation" do
     it "is valid" do
       article = Article.new(article_params)
       article.save
 
       comment = Comment.new(comment_params)
       comment.article_id = article.id
-      comment.status = 'private'
+      comment.status = "private"
       comment.body_characters_count = comment.body.length
       expect(comment.country).to eq(nil)
       comment.save
 
       expect(article.valid?).to be_truthy
       expect(comment.valid?).to be_truthy
-      expect(comment.country).to eq('Indonesia')
+      expect(comment.country).to eq("Indonesia")
     end
   end
 
-  context 'article total comment will be +1' do
+  context "article total comment will be +1" do
     it "is valid" do
       article = Article.new(article_params)
       article.save
       expect(article.total_comments).to eq(article_params[:total_comments].to_s)
 
       comment = article.comments.new(comment_params)
-      comment.status = 'private'
+      comment.status = "private"
       comment.body_characters_count = comment.body.length
       comment.save
 
@@ -270,7 +270,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'article frequency to be found will be +1' do
+  context "article frequency to be found will be +1" do
     it "is valid" do
       article = Article.new(article_params)
       article.save
@@ -281,7 +281,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'when touch changed field updated_at' do
+  context "when touch changed field updated_at" do
     it "is valid" do
       article = Article.new(article_params)
       article.save
@@ -292,7 +292,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'add log when article, comments deleted' do
+  context "add log when article, comments deleted" do
     it "is valid" do
       article = Article.new(article_params)
       article.save
@@ -311,7 +311,7 @@ RSpec.describe Article, type: :model do
     end
   end
 
-  context 'using joins' do
+  context "using joins" do
     it "is valid" do
       article = Article.new(article_params)
       article.save
@@ -322,6 +322,29 @@ RSpec.describe Article, type: :model do
 
       expect(article.valid?).to be_truthy
       expect(comment.valid?).to be_truthy
+    end
+  end
+
+  context "when filtered data from multiple tables" do
+    it "is valid" do
+      article = Article.new(article_params)
+      article.save
+
+      comment = article.comments.new(comment_params)
+      comment.body_characters_count = comment.body.length
+      comment.save
+
+      comment = article.comments.new(comment_params)
+      comment.body_characters_count = 10
+      comment.save
+
+      article_with_comments = Article.select("articles.title, articles.frequency_to_be_found, comments.body_characters_count")
+                                     .joins(:comments)
+                                     .where("comments.body_characters_count = ?", 10)
+                                     .first
+
+      expect(article_with_comments["title"].present?).to be_truthy
+      expect(article_with_comments["body_characters_count"].present?).to be_truthy
     end
   end
 end
