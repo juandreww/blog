@@ -11,15 +11,15 @@ end
 RSpec.describe Card do
 
   let(:card) { Card.new('Ace', 'Spades') }
+  let(:x) { 10 }
+  let(:y) { x + 10 }
 
-  # def card
-  #   puts 'Hey Card, I want you to play Spades!'
-  #   card = Card.new('Ace', 'Spades')
-  # end
+  # y = x + 10
+  # 
 
   it 'has a rank' do
-    byebug
     expect(card.rank).to eq('Ace')
+    expect(y).to eq(20)
   end
 
   it 'has a suit' do
