@@ -8,7 +8,7 @@ class Card
 end
 
 RSpec.describe Card do
-  before do
+  def card
     puts 'Hey Card, I want you to play Spades!'
     card = Card.new('Ace', 'Spades')
   end
