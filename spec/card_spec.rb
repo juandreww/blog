@@ -1,3 +1,4 @@
+require 'byebug'
 class Card
   attr_reader :rank, :suit
 
@@ -8,12 +9,16 @@ class Card
 end
 
 RSpec.describe Card do
-  def card
-    puts 'Hey Card, I want you to play Spades!'
-    card = Card.new('Ace', 'Spades')
-  end
+
+  let(:card) { Card.new('Ace', 'Spades') }
+
+  # def card
+  #   puts 'Hey Card, I want you to play Spades!'
+  #   card = Card.new('Ace', 'Spades')
+  # end
 
   it 'has a rank' do
+    byebug
     expect(card.rank).to eq('Ace')
   end
 
