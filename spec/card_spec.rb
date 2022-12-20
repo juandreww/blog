@@ -8,13 +8,16 @@ class Card
 end
 
 RSpec.describe Card do
-  it 'has a rank' do
+  before do
+    puts 'Hey Card, I want you to play Spades!'
     card = Card.new('Ace', 'Spades')
+  end
+
+  it 'has a rank' do
     expect(card.rank).to eq('Ace')
   end
 
   it 'has a suit' do
-    card = Card.new('Ace', 'Spades')
     expect(card.suit).to eq('Spades')
   end
 end
