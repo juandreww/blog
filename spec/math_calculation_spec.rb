@@ -2,19 +2,20 @@ require "rails_helper"
 require "byebug"
 
 RSpec.describe 'math calculations' do
-  it 'should return false' do
+  it 'should return not Jack Dorsey' do
     twitter_ceo = 'Jack Dorsey'
     expect(twitter_ceo).to_not eq('Elon Musk')
   end
 
   describe 'with even number' do
+    byebug
     it 'should return true' do
-      expect(4.even?).to eq(true)
+      expect(4.even?).to eq(false)
     end
   end
 
   it 'does basic math' do
-
+    byebug
 =begin
   expect(3+4)
   def to(expect(3 + 4), eq(7))
