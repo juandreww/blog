@@ -14,8 +14,7 @@ RSpec.describe Card do
   let(:x) { 10 }
   let(:y) { x + 10 }
 
-  # y = x + 10
-  # 
+  # y = let(:x) + 10
 
   it 'has a rank' do
     expect(card.rank).to eq('Ace')
