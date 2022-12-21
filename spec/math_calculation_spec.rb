@@ -8,9 +8,22 @@ RSpec.describe 'math calculations' do
   end
 
   describe 'with even number' do
-    it 'should return true' do
-      expect(4.even?).to eq(true)
+    puts 'Before Before'
+    before(:example) do
+      @number = 4
+      puts 'Before example'
     end
+
+    after(:example) do
+      puts 'After example'
+    end
+
+    it 'should return true' do
+      expect(@number.even?).to eq(true)
+      puts 'After Test'
+    end
+
+    puts 'After After'
   end
 
   it 'does basic math' do
