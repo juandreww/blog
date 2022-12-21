@@ -8,14 +8,12 @@ RSpec.describe 'math calculations' do
   end
 
   describe 'with even number' do
-    byebug
     it 'should return true' do
       expect(4.even?).to eq(false)
     end
   end
 
   it 'does basic math' do
-    byebug
 =begin
   expect(3+4)
   def to(expect(3 + 4), eq(7))
@@ -25,7 +23,6 @@ RSpec.describe 'math calculations' do
       return true
   end
 =end
-
     expect(3 + 4).to eq(7)
     expect(9 * 10).to eq(90)
     expect(100 / 10).to eq(10)
