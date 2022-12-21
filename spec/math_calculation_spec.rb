@@ -9,7 +9,7 @@ RSpec.describe 'math calculations' do
 
   describe 'with even number' do
     it 'should return true' do
-      expect(4.even?).to eq(false)
+      expect(4.even?).to eq(true)
     end
   end
 
