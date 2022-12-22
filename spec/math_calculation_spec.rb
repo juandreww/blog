@@ -2,20 +2,46 @@ require "rails_helper"
 require "byebug"
 
 RSpec.describe 'math calculations' do
+  before(:example) do
+    @number = 4
+    puts 'Outer before example'
+  end
+
+  after(:example) do
+    puts 'Outer after example'
+  end
+
   it 'should return not Jack Dorsey' do
     twitter_ceo = 'Jack Dorsey'
     expect(twitter_ceo).to_not eq('Elon Musk')
   end
 
+  before(:context) do
+    puts 'Before context'
+  end
+
+  after(:context) do
+    puts 'After context'
+  end
+
   describe 'with even number' do
     puts 'Before Before'
+
+    before(:context) do
+      puts 'Inner before context'
+    end
+
+    after(:context) do
+      puts 'Inner after context'
+    end
+
     before(:example) do
       @number = 4
-      puts 'Before example'
+      puts 'Inner before example'
     end
 
     after(:example) do
-      puts 'After example'
+      puts 'Inner after example'
     end
 
     it 'should return true' do
