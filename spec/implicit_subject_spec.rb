@@ -10,5 +10,6 @@ RSpec.describe Array do
 
     expect(array.length).to eq(1)
     expect(array[0]).to eq('yakitori')
+    byebug
   end
 end
