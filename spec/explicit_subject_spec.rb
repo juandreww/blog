@@ -1,7 +1,7 @@
 require "rails_helper"
 require "byebug"
 
-RSpec.describe Array do
+RSpec.describe Hash do
   it 'try to test subject' do
     expect(subject.length).to eq(0)
     expect(subject.class).to eq(Array)
