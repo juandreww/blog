@@ -15,6 +15,6 @@ RSpec.describe Array do
 
   it 'has the same element with sally' do
     expect(sally).to eq(subject)
-    expect(sally.length).to eq(2)
+    expect(sally).to match_array([108, 100])
   end
 end
