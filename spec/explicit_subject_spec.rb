@@ -2,13 +2,24 @@ require "rails_helper"
 require "byebug"
 
 RSpec.describe Hash do
-  it 'try to test subject' do
-    expect(subject.length).to eq(0)
-    expect(subject.class).to eq(Array)
+  subject(:bob) do
+    {
+      a: 1,
+      b: 2
+    }
+  end
 
-    array = subject.push('yakitori')
+  it 'has two key value pairs' do
+    expect(subject.length).to eq(2)
+    expect(subject.class).to eq(Hash)
+    expect(subject).to eq(bob)
+  end
 
-    expect(array.length).to eq(1)
-    expect(array[0]).to eq('yakitori')
+  context 'nested example' do
+    it 'has two key value pairs' do
+      expect(subject.length).to eq(2)
+      expect(subject.class).to eq(Hash)
+      expect(subject).to eq(bob)
+    end
   end
 end
