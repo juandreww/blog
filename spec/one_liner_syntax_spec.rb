@@ -1,17 +1,17 @@
 RSpec.describe 'one liner syntax' do
-  subject { 5 }
+  subject { [1, 2] }
 
   context 'with classical syntax' do
-    it 'should equal 5' do
-      expect(subject).to eq(5)
+    it 'should equal to array [1, 2]' do
+      expect(subject).to match_array([2, 1])
     end
   end
 
   context 'with one-liner syntax' do
-    it { is_expected.to eq(5) }
+    it { is_expected.to match_array([1, 2]) }
   end
 
   context 'with should expectation' do
-    it { should eq(5) }
+    it { should match_array([1, 2]) }
   end
 end
