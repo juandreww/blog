@@ -1,3 +1,4 @@
+require 'byebug'
 class ProfessionalWrestler
   attr_reader :name, :finishing_move
 
@@ -36,8 +37,7 @@ RSpec.describe 'pokemon attributes' do
 
   context 'list of pokemons' do
     it 'checks attributes and proper values' do
-      expect(pokemon_lists).to have_attributes(age: 17)
-      expect(pokemon_lists).to have_attributes(:list_pokemon)
+      expect(pokemon_lists).to include(age: 17)
     end
   end
 end
