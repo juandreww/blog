@@ -16,4 +16,14 @@ RSpec.describe 'equality matchers' do
       expect(a_string).to eql(b_string.downcase)
     end
   end
+
+  describe'equal and be matcher' do
+    let(:first_array) { [1, 2, 3] }
+    let(:second_array) { [1, 2, 3] }
+    let(:third_array) { first_array }
+
+    it 'cares about object identity' do
+
+    end
+  end
 end
