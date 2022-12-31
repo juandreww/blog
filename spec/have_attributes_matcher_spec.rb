@@ -63,7 +63,13 @@ RSpec.describe 'pokemon attributes' do
 
   context 'include matrices from array' do
     it 'checks attributes and proper values' do
-      byebug
+      expect( matrices.map { |matrice| matrice[1][:age] } ).to all(be > 10)
+      expect( matrices.map { |matrice| matrice[1][:age] } ).to eql([17, 19])
+    end
+  end
+
+  context 'include matrices #2 from array' do
+    it 'checks attributes and proper values' do
       expect( matrices.map { |matrice| matrice[1][:age] } ).to all(be > 10)
       expect( matrices.map { |matrice| matrice[1][:age] } ).to eql([17, 19])
     end
