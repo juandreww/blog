@@ -23,7 +23,11 @@ RSpec.describe 'equality matchers' do
     let(:third_array) { first_array }
 
     it 'cares about object identity' do
-
+      expect(first_array).to eq(second_array)
+      expect(first_array).to eql(second_array)
+      expect(2).to be(2)
+      expect([]).to be_empty
+      expect(0).to be_zero
     end
   end
 end
