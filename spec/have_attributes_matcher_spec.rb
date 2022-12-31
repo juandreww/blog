@@ -35,13 +35,29 @@ RSpec.describe 'pokemon attributes' do
     }
   }
 
+  let(:matrices) {
+    [
+      [ { name: 'ash' }, { age: 17 } ],
+      [ { name: 'brock' }, { age: 19 } ]
+    ]
+  }
+
   context 'list of pokemons' do
     it 'checks attributes and proper values' do
       expect(pokemon_lists).to include(age: 17)
+      expect(pokemon_lists).to include(pokeballs_count: 4)
       expect(pokemon_lists).to include(list_pokemon: ['charizard',
         'snorlax',
         'pikachu',
         'bulbasaur'])
+    end
+  end
+
+  context 'include matrices from array' do
+    it 'checks attributes and proper values' do
+      byebug
+      expect( matrices.map { |matrice| matrice[1][:age] } ).to all(be > 10)
+      expect( matrices.map { |matrice| matrice[1][:age] } ).to eql([17, 19])
     end
   end
 end
