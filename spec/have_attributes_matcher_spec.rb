@@ -42,6 +42,14 @@ RSpec.describe 'pokemon attributes' do
     ]
   }
 
+  let(:matrices_2) {
+    [
+      [ { text: 'name' }, { text: 'age' } ],
+      [ { text: 'ash' }, { text: 17 } ],
+      [ { text: 'brock' }, { text: 19 } ]
+    ]
+  }
+
   context 'list of pokemons' do
     it 'checks attributes and proper values' do
       expect(pokemon_lists).to include(age: 17)
