@@ -20,5 +20,24 @@ RSpec.describe 'have_attributes matcher' do
 end
 
 RSpec.describe 'pokemon attributes' do
+  let(:pokemon_lists) {
+    {
+      tamer: 'Ash',
+      age: 17,
+      pokeballs_count: 4,
+      list_pokemon: [
+        'charizard',
+        'snorlax',
+        'pikachu',
+        'bulbasaur'
+      ]
+    }
+  }
 
+  context 'list of pokemons' do
+    it 'checks attributes and proper values' do
+      expect(pokemon_lists).to have_attributes(age: 17)
+      expect(pokemon_lists).to have_attributes(:list_pokemon)
+    end
+  end
 end
