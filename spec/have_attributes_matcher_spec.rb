@@ -38,6 +38,10 @@ RSpec.describe 'pokemon attributes' do
   context 'list of pokemons' do
     it 'checks attributes and proper values' do
       expect(pokemon_lists).to include(age: 17)
+      expect(pokemon_lists).to include(list_pokemon: ['charizard',
+        'snorlax',
+        'pikachu',
+        'bulbasaur'])
     end
   end
 end
