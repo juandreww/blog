@@ -19,8 +19,11 @@ RSpec.describe 'first example group' do
     let(:fifteen) { some_helper_method + 10 }
     let(:one_menu) { @foods + ['Chicken karaage'] }
 
-    it 'can use outside instance variables' do
+    before do |example|
       one_menu
+    end
+
+    it 'can use outside instance variables' do
       expect(@foods.length).to eq(0)
       @foods << 'Sushi'
       expect(@foods.length).to eq(1)
