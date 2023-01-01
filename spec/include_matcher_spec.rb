@@ -48,7 +48,7 @@ RSpec.describe 'include matcher' do
     it 'can check for key existence' do
       expect(list_of_drink).to include(:sprite)
       expect(list_of_drink).to include(:coca_cola, :fanta)
-      expect(list_of_drink).to_not include(:aqua)
+      expect(list_of_drink).not_to include(:aqua)
     end
 
     it 'can check for key-value pair' do
@@ -60,6 +60,7 @@ RSpec.describe 'include matcher' do
         'online store'
       ])
       expect(list_of_drink[:sell_at].class).to eq(Array)
+      expect(list_of_drink[:sprite].class).to eq(Integer)
     end
   end
 end
