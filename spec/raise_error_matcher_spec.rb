@@ -13,6 +13,8 @@ RSpec.describe 'raise_error matcher' do
     '10000'.to_i - 1000
   end
 
+  class CustomError < StandardError; end
+
   it 'can check for a specific error being raised' do
     expect { some_method }.to raise_error(NameError)
     expect { string_minus_integer }.to raise_error(NoMethodError)
@@ -21,5 +23,9 @@ RSpec.describe 'raise_error matcher' do
 
   it 'returns valid response' do
     expect(integer_minus_integer).to eq(9_000)
+  end
+
+  it 'can check for a user-created error' do
+    expect { raise CustomError }.to raise_error(CustomError)
   end
 end
