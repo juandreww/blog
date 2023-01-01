@@ -33,10 +33,19 @@ class Clothes
   def length
     '74 cm'
   end
+
+  def waist_add_size(requestor, add_size)
+    "#{requestor} requested increase of waist from previously 52 cm will add #{add_size} cm"
+  end
 end
 
 RSpec.describe Clothes do
   it 'confirms that an object can respond to a method' do
-    byebug
+    expect(subject).to respond_to(:chest)
+    expect(subject).to respond_to(:chest, :length)
+  end
+
+  it 'confirms that an object cannot respond to a method' do
+    expect(subject).not_to respond_to(:global_variables)
   end
 end
