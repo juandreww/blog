@@ -50,5 +50,5 @@ RSpec.describe Clothes do
     expect(subject).not_to respond_to(:global_variables)
   end
 
-  it { is_expected.to respond_to(:waist_add_size).with(2).arguments }
+  it { is_expected.to respond_to(:waist_add_size).with(1).arguments }
 end
