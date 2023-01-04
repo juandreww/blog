@@ -24,5 +24,19 @@ end
 class Movie
   attr_reader :actor
 
-  
+  def initialize(actor)
+    @actor = actor
+  end
+
+  def start_shooting
+    if actor.ready?
+      puts actor.act
+      puts actor.fall_off_ladder
+      puts actor.light_on_fire
+    end
+  end
 end
+
+actor = Actor.new('Brad Pitt')
+movie = Movie.new(actor)
+movie.start_shooting
