@@ -27,6 +27,7 @@ class Pizza
   end
 
   def start_delivery
+    byebug
     if delivery_man.ready?
       delivery_man.turn_on_vehicle_engine
       delivery_man.on_the_way
@@ -36,5 +37,6 @@ class Pizza
 end
 
 dony = DeliveryMan.new
-dony.ready?
-dony.turn_on_vehicle_engine
+pizza = Pizza.new(dony)
+pizza.start_delivery
+
