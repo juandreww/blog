@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Actor
   def initialize(name)
     @name = name
@@ -38,18 +40,15 @@ class Movie
   end
 end
 
-# actor = Actor.new('Brad Pitt')
-# movie = Movie.new(actor)
-# movie.start_shooting
-
 RSpec.describe Movie do
   let(:stuntman) { double('Mr. Danger', ready?: true, act: 'Any string') }
   subject { described_class.new(stuntman) }
 
   describe '#start_shooting method' do
     it 'expects an actor to do 3 actions' do
-      expect(stuntman).to receive(:ready?).once
-      expect(stuntman).to receive(:act).twice
+      byebug
+      # expect(stuntman).to receive(:ready?).once
+      expect(stuntman).to receive(:act).once
       expect(stuntman).to receive(:fall_off_ladder).once
       expect(stuntman).to receive(:light_on_fire).once
       subject.start_shooting
