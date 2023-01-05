@@ -46,9 +46,8 @@ RSpec.describe Movie do
 
   describe '#start_shooting method' do
     it 'expects an actor to do 3 actions' do
-      byebug
-      # expect(stuntman).to receive(:ready?).once
-      expect(stuntman).to receive(:act).once
+      expect(stuntman).to receive(:ready?).once
+      expect(stuntman).to receive(:act).twice
       expect(stuntman).to receive(:fall_off_ladder).once
       expect(stuntman).to receive(:light_on_fire).once
       subject.start_shooting
