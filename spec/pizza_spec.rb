@@ -2,7 +2,11 @@ require 'byebug'
 
 class DeliveryMan
   def ready?
-    sleep(3)
+    3.times do
+      puts '.'
+      sleep(1)
+    end
+
     true
   end
 
@@ -27,7 +31,6 @@ class Pizza
   end
 
   def start_delivery
-    byebug
     if delivery_man.ready?
       delivery_man.turn_on_vehicle_engine
       delivery_man.on_the_way
