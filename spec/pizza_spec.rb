@@ -34,3 +34,7 @@ class Pizza
     end
   end
 end
+
+dony = DeliveryMan.new
+dony.ready?
+dony.turn_on_vehicle_engine
