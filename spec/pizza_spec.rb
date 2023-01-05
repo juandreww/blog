@@ -10,7 +10,7 @@ class DeliveryMan
     puts 'Turning on vehicle engine.'
   end
 
-  def delivery_on_the_way
+  def on_the_way
     puts 'Delivery on the way.'
   end
 
@@ -27,6 +27,10 @@ class Pizza
   end
 
   def start_delivery
-    if delivery_man.
+    if delivery_man.ready?
+      delivery_man.turn_on_vehicle_engine
+      delivery_man.on_the_way
+      delivery_man.arrived_at_destination
+    end
   end
 end
