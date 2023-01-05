@@ -43,3 +43,7 @@ dony = DeliveryMan.new
 pizza = Pizza.new(dony)
 pizza.start_delivery
 
+RSpec.describe Pizza do
+  let(:part_time_delivery_man) { double('Hamid') }
+  subject { described_class.new(part_time_delivery_man) }
+end
