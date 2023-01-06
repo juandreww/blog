@@ -15,5 +15,14 @@ RSpec.describe 'allow method review' do
     arr = [1, 2, 3]
     allow(arr).to receive(:sum).and_return(10)
     expect(arr.sum).to eq(10)
+
+    arr.push(4)
+    expect(arr).to eql([1, 2, 3, 4])
+  end
+
+  it 'can return multiple values in sequence' do
+    mock_array = double
+    allow(mock_array).to receive(:pop).and_return(:c, :b, nil)
+    expect(mock_array.pop).to eq(:c)
   end
 end
