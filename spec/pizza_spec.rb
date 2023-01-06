@@ -45,15 +45,14 @@ end
 # pizza.start_delivery
 
 RSpec.describe Pizza do
-  let(:part_time_delivery_man) { double('Hamid', ready?: true,
-                                        turn_on_vehicle_engine: 'Starting engine',
-                                        on_the_way: 'OTW',
-                                        arrived_at_destination: 'Arrived') }
-  let(:part_time_delivery_man) { object_double(DeliveryMan.new, ready?: true) }
+  let(:part_time_delivery_man) { object_double(DeliveryMan.new) }
+
   subject { described_class.new(part_time_delivery_man) }
 
   context 'when part_timer start to do delivery' do
     it 'should be able to return 3 action' do
+      allow(part_time_delivery_man).to receive(:ready?).and_return(true)
+
       expect(part_time_delivery_man).to receive(:ready?).once
       expect(part_time_delivery_man).to receive(:turn_on_vehicle_engine).once
       expect(part_time_delivery_man).to receive(:on_the_way).once
