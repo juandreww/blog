@@ -24,5 +24,11 @@ RSpec.describe 'allow method review' do
     mock_array = double
     allow(mock_array).to receive(:pop).and_return(:c, :b, nil)
     expect(mock_array.pop).to eq(:c)
+    expect(mock_array.pop).to eq(:b)
+    expect(mock_array.pop).to be_nil
+    expect(mock_array.pop).to be_nil
+    expect(mock_array.pop).to be_nil
+    expect(mock_array.pop).to be_nil
+    expect(mock_array.pop).to be_nil
   end
 end
