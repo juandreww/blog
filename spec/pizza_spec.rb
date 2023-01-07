@@ -39,11 +39,6 @@ class Pizza
   end
 end
 
-# comment first
-# dony = DeliveryMan.new
-# pizza = Pizza.new(dony)
-# pizza.start_delivery
-
 RSpec.describe Pizza do
   let(:part_time_delivery_man) { object_double(DeliveryMan.new) }
 
