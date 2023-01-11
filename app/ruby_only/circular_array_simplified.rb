@@ -10,6 +10,6 @@ def prints(menu, starting_index)
 end
 
 domino_pizza_menus = ["0. grilled beef supreme", "1. cheesy meatball blast", "2. ultimate cheese melt",
-                      "3. american frankie sausage", "4. american classic cheeseburger"]
+                      "3. american frankie sausage", "4. american classic cheeseburgers"]
 starting_index = 3
 prints(domino_pizza_menus, starting_index)
