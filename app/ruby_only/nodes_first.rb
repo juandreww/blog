@@ -8,6 +8,13 @@ class DayNames
 end
 
 mon = DayNames.new("Mon")
+tue = DayNames.new("Tue")
+wed = DayNames.new("Wed")
+
 puts "#{mon.dayname} .. #{mon.next_value}"
 mon.next_value = 'arab'
 puts "#{mon.dayname} .. #{mon.next_value}"
+mon.next_value = tue
+tue.next_value = wed
+
+puts mon.next_value.dayname
