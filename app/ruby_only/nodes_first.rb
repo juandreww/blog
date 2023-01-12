@@ -18,3 +18,9 @@ mon.next_value = tue
 tue.next_value = wed
 
 puts mon.next_value.dayname
+days = mon
+
+while days do
+  puts "Today is #{days.dayname}"
+  days = days.next_value
+end
