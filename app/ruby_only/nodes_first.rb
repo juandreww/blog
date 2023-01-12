@@ -7,4 +7,7 @@ class DayNames
   attr_accessor :dayname, :next_value
 end
 
-mon = daynames('Mon')
+mon = DayNames.new("Mon")
+puts "#{mon.dayname} .. #{mon.next_value}"
+mon.next_value = 'arab'
+puts "#{mon.dayname} .. #{mon.next_value}"
