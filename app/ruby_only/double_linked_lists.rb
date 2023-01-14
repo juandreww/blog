@@ -45,6 +45,13 @@ puts "Head is on #{linked_list.head.day_name}"
 puts "Tail is on #{linked_list.tail.day_name}"
 
 # insert front
+jack = Node.new("Jack")
+jack.next_val = linked_list.head
+jack.prev_val = linked_list.tail
 
+linked_list.head = jack
+puts "Head is on #{linked_list.head.day_name}"
+puts "Head + 1 is on #{linked_list.head.next_val.day_name}"
+puts "Tail is on #{linked_list.tail.day_name}"
 
 # rubocop: enable Rails/Output
