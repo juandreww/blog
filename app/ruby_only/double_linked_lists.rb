@@ -9,6 +9,15 @@ class Node
   end
 end
 
+class LinkedList
+  attr_accessor :head, :tail
+
+  def initialize
+    @head = nil
+    @tail = nil
+  end
+end
+
 mon = Node.new("Monday")
 tue = Node.new("Tuesday")
 wed = Node.new("Wednesday")
@@ -27,5 +36,15 @@ puts "After #{mon.day_name}, it will be #{mon.next_val.day_name}"
 puts "Before #{mon.day_name}, it will be #{mon.prev_val.day_name}"
 puts "After #{sat.day_name}, it will be #{sat.next_val.day_name}"
 puts "Before #{sat.day_name}, it will be #{sat.prev_val.day_name}"
+
+linked_list = LinkedList.new
+linked_list.head = mon
+linked_list.tail = sun
+
+puts "Head is on #{linked_list.head.day_name}"
+puts "Tail is on #{linked_list.tail.day_name}"
+
+# insert front
+
 
 # rubocop: enable Rails/Output
