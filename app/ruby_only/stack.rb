@@ -6,6 +6,7 @@ def push(stack, item)
   stack << item
 
   puts "insert #{item} to stack"
+  puts stack.inspect
 
   stack
 end
