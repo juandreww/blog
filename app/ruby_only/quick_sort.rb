@@ -26,6 +26,7 @@ def partition(array, first, last)
     end
     i += 1
   end
+  puts "Swapping array of index #{p_index} with #{last} from #{array.inspect}"
   array[p_index], array[last] = array[last], array[p_index]
 
   puts "Ending with array #{array.inspect}"
