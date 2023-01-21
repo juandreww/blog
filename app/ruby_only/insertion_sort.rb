@@ -1,14 +1,17 @@
-def insertion_sort(numbers)
-  numbers.each_with_index do |number, index|
-    number_to_compare = numbers[index + 1]
+def insertion_sort(array)
+  (1..array.size).each_with_index do |_num, i|   # Step 1
+    j = i # Step 2
+    while j.positive? # Step 3
+      break unless array[j - 1] > array[j] # Step 4
 
-    index_less_one = index
-    while index_less_one >= 0 && number_to_compare < numbers[index_less_one]
-      numbers[index_less_one + 1] = number[index_less_one]
-      index_less_one -= 1
+      temp = array[j]
+      array[j] = array[j - 1]
+      array[j - 1] = temp
+
+      j -= 1 # Step 5
     end
-    numbers[index_less_one + 1] = number_to_compare
   end
+  array
 end
 
 numbers = [12, 11, 13, 5, 6]
