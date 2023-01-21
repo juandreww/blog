@@ -1,34 +1,38 @@
-def quick_sort(array, low, high)
-  return unless low < high
-
-  puts array.inspect
-
-  pi = partition(array, low, high)
-  puts pi
-  quick_sort(array, low, pi - 1)
-  quick_sort(array, pi + 1, high)
-end
-
-def partition(array, low, high)
-  pivot = array[high]
-  i = low - 1
-
-  (low..high).each do |index|
-    next unless array[index] <= pivot
-
-    i += 1
-
-    array[i], array[index] = array[index], array[i]
+def quick_sort(array, first, last)
+  if first < last
+    j = partition(array, first, last)
+    puts "After partition #{array.inspect}"
+    quick_sort(array, first, j - 1)
+    puts "After first sort #{array.inspect}"
+    quick_sort(array, j + 1, last)
+    puts "After second sort #{array.inspect}"
   end
 
-  i += 1
-  array[i], array[high] = array[high], array[i]
-  i
+  array
 end
+
+# rubocop: disable Metrics/MethodLength
+def partition(array, first, last)
+  pivot = array[last]
+  p_index = first
+  i = first
+  puts "Start with pivot index #{p_index} and array #{array.inspect}"
+  puts
+
+  while i < last
+    if array[i].to_i <= pivot.to_i
+      array[i], array[p_index] = array[p_index], array[i]
+      p_index += 1
+    end
+    i += 1
+  end
+  array[p_index], array[last] = array[last], array[p_index]
+
+  p_index
+end
+# rubocop: enable Metrics/MethodLength
 
 array = [30, 10, 40, 20]
 puts array.inspect
-
-array[0], array[1] = array[1], array[0]
+array = quick_sort(array, 0, array.size - 1)
 puts array.inspect
-# quick_sort(array, 0, array.size - 1)
