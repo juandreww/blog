@@ -28,6 +28,9 @@ def partition(array, first, last)
   end
   array[p_index], array[last] = array[last], array[p_index]
 
+  puts "Ending with array #{array.inspect}"
+  puts
+
   p_index
 end
 # rubocop: enable Metrics/MethodLength
