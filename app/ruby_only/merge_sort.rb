@@ -17,8 +17,21 @@ class MergeSort
     merge(sorted_left, sorted_right)
   end
 
-  def merge(array)
-    array_divided = divide_array(array)
+  def merge(sorted_left, sorted_right)
+    combined_list = sorted_left + sorted_right
+    size = combined_list.size
+
+    combined_list.each_with_index do |_list, index|
+      (index + 1..size).each do |comparable|
+        next unless combined_list[comparable] < combined_list[index]
+
+        tmp = combined_list[index]
+        combined_list[index] = combined_list[comparable]
+        combined_list[comparable] = tmp
+      end
+    end
+
+    combined_list
   end
 end
 
