@@ -1,6 +1,14 @@
-def merge_sort(array)
-  array
+def divide_array(array)
+  pivot = array.size / 2
+  array_1 = array.first(pivot + 1)
+  array_2 = array.last(pivot)
+  puts array_1.inspect
+  puts array_2.inspect
 end
 
-array = [38, 27, 9, 12, 18, 13]
+def merge_sort(array)
+  divide_array(array)
+end
+
+array = [38, 27, 9, 12, 18]
 puts merge_sort(array).inspect
