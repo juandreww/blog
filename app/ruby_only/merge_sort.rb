@@ -1,21 +1,25 @@
-def divide_array(array)
-  return array if array.size < 2
+class MergeSort
+  def sort(array)
+    return array if array.size < 2
 
-  pivot = array.size / 2
+    pivot = (array.size / 2.0).ceil
 
-  array_left = array.size.odd? ? array.first(pivot + 1) : array.first(pivot)
-  array_right = array.last(pivot)
+    array_left = array.take(pivot)
+    array_right = array.drop(pivot)
 
-  puts array_left.inspect
-  puts array_right.inspect
-  puts
+    puts array_left.inspect
+    puts array_right.inspect
+    puts
 
-  [divide_array(array_left), divide_array(array_right)]
-end
+    sorted_left = sort(array_left)
+    sorted_right = sort(array_right)
 
-def merge_sort(array)
-  array_divided = divide_array(array)
-  
+    merge(sorted_left, sorted_right)
+  end
+
+  def merge(array)
+    array_divided = divide_array(array)
+  end
 end
 
 array = [38, 27, 9, 12, 18]
