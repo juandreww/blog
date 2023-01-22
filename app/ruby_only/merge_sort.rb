@@ -19,9 +19,9 @@ class MergeSort
 
   def merge(sorted_left, sorted_right)
     combined_list = sorted_left + sorted_right
-    size = combined_list.size
+    size = combined_list.size - 1
 
-    combined_list.each_with_index do |_list, index|
+    (0..size).each do |index|
       (index + 1..size).each do |comparable|
         if combined_list[comparable].nil?
           puts combined_list.inspect
