@@ -23,6 +23,11 @@ class MergeSort
 
     combined_list.each_with_index do |_list, index|
       (index + 1..size).each do |comparable|
+        if combined_list[comparable].nil?
+          puts combined_list.inspect
+          puts comparable
+          puts
+        end
         next unless combined_list[comparable] < combined_list[index]
 
         tmp = combined_list[index]
