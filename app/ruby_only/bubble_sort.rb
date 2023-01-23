@@ -15,5 +15,6 @@ def bubble_sort(arr)
 end
 
 arr = [10, 30, 20, 40, 30, 10]
+
 puts "Array before sort: #{arr.inspect}"
 puts "Array after sort: #{bubble_sort(arr).inspect}"
