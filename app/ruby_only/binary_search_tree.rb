@@ -14,6 +14,20 @@ end
 
 def min_value(node)
   return 1_000_000_000 if node.nil?
+
+  left_max = min_value(node.left)
+  right_max = min_value(node.right)
+
+  value = case left_max < right_max
+          when true
+            left_max
+          else
+            right_max
+          end
+
+  value = node.number if value > node.number
+
+  value
 end
 
 # rubocop: disable Metrics/AbcSize, Metrics/CyclomaticComplexity
