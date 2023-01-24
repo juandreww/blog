@@ -16,9 +16,19 @@ def min_value(node)
   return 1_000_000_000 if node.nil?
 end
 
+# rubocop: disable Metrics/AbcSize, Metrics/CyclomaticComplexity
 def bst?(node)
   return true if node.nil?
+
+  return false if node.left.present? && max_value(node.left) > node.number
+
+  return false if node.right.present? && min_value(node.right) < node.number
+
+  return false if bst?(node.left) == false || bst?(node.right) == false
+
+  true
 end
+# rubocop: enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
 root = Node.new(4)
 root.left = Node.new(2)
