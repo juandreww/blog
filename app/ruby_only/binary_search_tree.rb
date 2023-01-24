@@ -9,11 +9,15 @@ class Node
 end
 
 def max_value(node)
-  return 0 if node.empty?
+  return 0 if node.nil?
 end
 
 def min_value(node)
-  return 1_000_000_000 if node.empty?
+  return 1_000_000_000 if node.nil?
+end
+
+def bst?(node)
+  return true if node.nil?
 end
 
 root = Node.new(4)
@@ -22,8 +26,8 @@ root.right = Node.new(5)
 root.left.left = Node.new(1)
 root.left.right = Node.new(3)
 
-if is_bst(root)
-  puts 'It is BST'
+if bst?(root)
+  puts "It is BST"
 else
-  puts 'It is not a BST'
+  puts "It is not a BST"
 end
