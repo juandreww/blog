@@ -67,7 +67,7 @@ root.left.left = Node.new(1)
 root.left.right = Node.new(3)
 
 if bst?(root)
-  puts "It is BST"
+  puts "It is a BST"
 else
   puts "It is not a BST"
 end
