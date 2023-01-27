@@ -35,6 +35,10 @@ Layout/LineLength:
   Description: 'Limit lines to 130 characters. (Default is 80)'
   Max: 130
 
+Metrics/MethodLength:
+  Description: 'Limit lines to 20 characters. (Default is 10)'
+  Max: 20
+
 Style/FrozenStringLiteralComment:
   Description: To help transition from Ruby 2.3.0 to Ruby 3.0.
   Enabled: false

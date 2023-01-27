@@ -12,19 +12,7 @@ end
 def max_value(node)
   return 0 if node.nil?
 
-  left_max = max_value(node.left)
-  right_max = max_value(node.right)
-
-  value = case left_max > right_max
-          when true
-            left_max
-          else
-            right_max
-          end
-
-  value = node.number if value > node.number
-
-  value
+  assign_value(node, '>')
 end
 
 def min_value(node)
@@ -45,6 +33,28 @@ def min_value(node)
   value
 end
 # rubocop: enable Metrics/MethodLength
+
+def assign_value(node, comparison = '>')
+  left_max = max_value(node.left)
+  right_max = max_value(node.right)
+  comparison = case comparison
+               when '>'
+                 left_max > right_max
+               else
+                 left_max < right_max
+               end
+
+  value = case comparison
+          when true
+            left_max
+          else
+            right_max
+          end
+
+  value = node.number if value > node.number
+
+  value
+end
 
 # rubocop: disable Metrics/AbcSize, Metrics/CyclomaticComplexity
 def bst?(node)
