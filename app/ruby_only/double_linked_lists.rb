@@ -1,4 +1,3 @@
-# rubocop: disable Rails/Output
 class Node
   attr_accessor :prev_val, :next_val, :day_name
 

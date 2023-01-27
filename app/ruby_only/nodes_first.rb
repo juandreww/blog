@@ -12,7 +12,7 @@ tue = DayNames.new("Tue")
 wed = DayNames.new("Wed")
 
 puts "#{mon.dayname} .. #{mon.next_value}"
-mon.next_value = 'arab'
+mon.next_value = "arab"
 puts "#{mon.dayname} .. #{mon.next_value}"
 mon.next_value = tue
 tue.next_value = wed
@@ -20,7 +20,7 @@ tue.next_value = wed
 puts mon.next_value.dayname
 days = mon
 
-while days do
+while days
   puts "Today is #{days.dayname}"
   days = days.next_value
 end

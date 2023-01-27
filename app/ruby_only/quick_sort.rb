@@ -11,7 +11,6 @@ def quick_sort(array, first, last)
   array
 end
 
-# rubocop: disable Metrics/MethodLength
 def partition(array, first, last)
   pivot = array[last]
   p_index = first
@@ -34,8 +33,6 @@ def partition(array, first, last)
 
   p_index
 end
-# rubocop: enable Metrics/MethodLength
-
 array = [30, 10, 40, 20]
 puts array.inspect
 array = quick_sort(array, 0, array.size - 1)

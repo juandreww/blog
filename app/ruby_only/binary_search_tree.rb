@@ -8,37 +8,23 @@ class Node
   attr_accessor :number, :left, :right
 end
 
-# rubocop: disable Metrics/MethodLength
 def max_value(node)
   return 0 if node.nil?
 
-  assign_value(node, '>')
+  assign_value(node, ">")
 end
 
 def min_value(node)
   return 1_000_000_000 if node.nil?
 
-  left_max = min_value(node.left)
-  right_max = min_value(node.right)
-
-  value = case left_max < right_max
-          when true
-            left_max
-          else
-            right_max
-          end
-
-  value = node.number if value > node.number
-
-  value
+  assign_value(node, "<")
 end
-# rubocop: enable Metrics/MethodLength
 
-def assign_value(node, comparison = '>')
+def assign_value(node, comparison = ">")
   left_max = max_value(node.left)
   right_max = max_value(node.right)
   comparison = case comparison
-               when '>'
+               when ">"
                  left_max > right_max
                else
                  left_max < right_max

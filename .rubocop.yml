@@ -47,6 +47,9 @@ Style/WordArray:
   Description: 'Use %w or %W for arrays of words.'
   Enabled: false
 
+Rails/Output:
+  Enabled: false
+
 # Defaults all strings to double quotes. Less performant, but
 # nicer for consistency, and for adding interpolation later.
 Style/StringLiterals:
