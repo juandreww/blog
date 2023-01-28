@@ -63,13 +63,26 @@ end
 def insert_node(root, key)
   if root.nil?
     Node.new(key)
-  elsif root.number == key
-    root
   elsif root.number < key
     root.right = insert_node(root.right, key)
-  else
+  elsif root.number > key
     root.left = insert_node(root.left, key)
   end
+
+  root
+end
+
+def find_node(root, key)
+  if root.nil?
+    nil
+  elsif root.left.number == key
+    root.left
+  elsif root.right.number == key
+    root.right
+  end
+
+  elsif key > root.left.number && key < root.right.number
+  
 end
 
 root = Node.new(4)
@@ -78,6 +91,8 @@ root.right = Node.new(5)
 root.left.left = Node.new(1)
 root.left.right = Node.new(3)
 root = insert_node(root, 6)
+node = find_node(root, 6)
+puts node.number
 
 if bst?(root)
   puts "It is a BST"
