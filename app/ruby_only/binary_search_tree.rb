@@ -20,7 +20,6 @@ def min_value(node)
   assign_value(node, "<")
 end
 
-
 def assign_value(node, comparison = ">")
   left_max = max_value(node.left)
   right_max = max_value(node.right)
