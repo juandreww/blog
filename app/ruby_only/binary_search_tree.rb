@@ -60,11 +60,24 @@ def bst?(node)
 end
 # rubocop: enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
+def insert_node(root, key)
+  if root.nil?
+    Node.new(key)
+  elsif root.number == key
+    root
+  elsif root.number < key
+    root.right = insert_node(root.right, key)
+  else
+    root.left = insert_node(root.left, key)
+  end
+end
+
 root = Node.new(4)
 root.left = Node.new(2)
 root.right = Node.new(5)
 root.left.left = Node.new(1)
 root.left.right = Node.new(3)
+root = insert_node(root, 6)
 
 if bst?(root)
   puts "It is a BST"
