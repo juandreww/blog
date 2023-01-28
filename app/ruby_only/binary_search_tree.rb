@@ -11,26 +11,30 @@ end
 def max_value(node)
   return 0 if node.nil?
 
-  assign_value(node, ">")
+  left_max = max_value(node.left)
+  right_max = max_value(node.right)
+
+  compare_left_and_right(node, left_max, right_max, "<")
 end
 
 def min_value(node)
   return 1_000_000_000 if node.nil?
 
-  assign_value(node, "<")
+  left_max = min_value(node.left)
+  right_max = min_value(node.right)
+
+  compare_left_and_right(node, left_max, right_max, "<")
 end
 
-def assign_value(node, comparison = ">")
-  left_max = max_value(node.left)
-  right_max = max_value(node.right)
-  comparison = case comparison
-               when ">"
-                 left_max > right_max
-               else
-                 left_max < right_max
-               end
+def compare_left_and_right(node, left_max, right_max, comparison = ">")
+  compared_value = case comparison
+                   when ">"
+                     left_max > right_max
+                   else
+                     left_max < right_max
+                   end
 
-  value = case comparison
+  value = case compared_value
           when true
             left_max
           else
@@ -46,9 +50,9 @@ end
 def bst?(node)
   return true if node.nil?
 
-  return false if node.left.present? && max_value(node.left) > node.number
+  return false if !node.left.nil? && max_value(node.left) > node.number
 
-  return false if node.right.present? && min_value(node.right) < node.number
+  return false if !node.right.nil? && min_value(node.right) < node.number
 
   return false if bst?(node.left) == false || bst?(node.right) == false
 
