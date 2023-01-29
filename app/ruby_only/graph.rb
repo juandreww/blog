@@ -1,5 +1,5 @@
 class AdjacentNode
-  attr_accessor :data
+  attr_accessor :data, :next
 
   def initialize(data)
     @vertex = data
@@ -8,7 +8,7 @@ class AdjacentNode
 end
 
 class Graph
-  attr_accessor :vertex
+  attr_accessor :vertex, :graph
 
   def initialize(vertex)
     @vertex = vertex
@@ -31,6 +31,7 @@ class Graph
       while vertices
         print("Vertex #{vertices.next}")
         vertices = vertices.next
+      end
     end
   end
 end
@@ -38,8 +39,11 @@ end
 vertex = 10
 graph = Graph.new(vertex)
 graph.add_edge(0, 1)
+puts "A"
 graph.add_edge(0, 4)
 graph.add_edge(1, 2)
+puts "B"
 graph.add_edge(1, 3)
 graph.add_edge(1, 4)
+puts "C"
 graph.print_graph
