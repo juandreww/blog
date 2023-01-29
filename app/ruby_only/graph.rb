@@ -18,6 +18,7 @@ class Graph
   def add_edge(source, destination)
     node = AdjacentNode.new(destination)
     node.next = @graph[source]
+    @graph[source] = node
 
     node = AdjacentNode.new(source)
     node.next = @graph[destination]
@@ -25,11 +26,12 @@ class Graph
   end
 
   def print_graph
-    vertex.each do |v|
-      print("Adjacency list of vertex #{v} head")
+    vertex.times do |v|
+      print("Adjacency list of vertex #{v} head\n")
       vertices = @graph[v]
+      puts vertices
       while vertices
-        print("Vertex #{vertices.next}")
+        print("Vertex #{vertices.data}\n")
         vertices = vertices.next
       end
     end
@@ -47,3 +49,4 @@ graph.add_edge(1, 3)
 graph.add_edge(1, 4)
 puts "C"
 graph.print_graph
+puts graph.graph.inspect
