@@ -81,8 +81,7 @@ def find_node(root, key)
     root.right
   end
 
-  elsif key > root.left.number && key < root.right.number
-  
+  # elsif key > root.left.number && key < root.right.number
 end
 
 root = Node.new(4)
