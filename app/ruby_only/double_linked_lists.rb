@@ -22,7 +22,7 @@ tue = Node.new("Tuesday")
 wed = Node.new("Wednesday")
 thu = Node.new("Thursday")
 fri = Node.new("Friday")
-sat = Node.new("Saturdays")
+sat = Node.new("Saturday")
 sun = Node.new("Sunday")
 
 day_names = [mon, tue, wed, thu, fri, sat, sun]
