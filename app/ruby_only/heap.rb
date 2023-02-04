@@ -5,5 +5,4 @@ print("\n")
 print("#{b_heap.elements}\n")
 print("#{b_heap.class}\n")
 print("#{b_heap.extract_min}\n")
-
 print("\n")
