@@ -9,7 +9,7 @@ end
 
 mon = DayNames.new("Mon")
 tue = DayNames.new("Tue")
-wed = DayNames.new("Wed")
+wed = DayNames.new("Weds")
 
 puts "#{mon.dayname} .. #{mon.next_value}"
 mon.next_value = "arab"
