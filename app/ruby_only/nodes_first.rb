@@ -8,7 +8,7 @@ class DayNames
 end
 
 mon = DayNames.new("Mon")
-tue = DayNames.new("Tue")
+tue = DayNames.new("Tuesday")
 wed = DayNames.new("Wed")
 
 puts "#{mon.dayname} .. #{mon.next_value}"
