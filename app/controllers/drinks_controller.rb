@@ -14,11 +14,17 @@ class DrinksController < ApplicationController
     end
   end
 
+  def show
+    @drink = Drink.find_by(id: params["id"])
+  end
+
   private
 
   def create_params
     @create_params ||= params["drink"].permit(:brand, :name, :unit, :packaging)
 
     @create_params["packaging"] = @create_params["packaging"].to_i
+
+    @create_params
   end
 end
