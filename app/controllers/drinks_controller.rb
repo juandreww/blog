@@ -1,5 +1,6 @@
 class DrinksController < ApplicationController
   def new
-
-    en
+    @drink = Drink.new
+    render "new"
+  end
 end
