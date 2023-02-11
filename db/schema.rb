@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_053314) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_11_045218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_053314) do
     t.index ["journalist_id"], name: "index_devices_on_journalist_id"
   end
 
+  create_table "drinks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "brand"
+    t.string "name"
+    t.string "unit"
+    t.integer "packaging"
+  end
+
   create_table "employees", id: :uuid, default: nil, force: :cascade do |t|
     t.string "name", limit: 50
     t.string "username", limit: 50
@@ -167,6 +176,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_053314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.jsonb "metadata"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
