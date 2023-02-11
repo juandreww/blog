@@ -1,1 +1,30 @@
-<h1>Drink the newest variant!</h1>
+<%= form_with model: @drink do |form| %>
+  <div>
+    <%= form.label :brand %><br>
+    <%= form.text_field :brand %>
+  </div>
+
+  <br>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_area :name %>
+  </div>
+  <br>
+
+  <br>
+  <div>
+    <%= form.label :unit %><br>
+    <%= form.text_area :unit %>
+  </div>
+  <br>
+
+  <div>
+    <%= form.label :packaging %><br>
+    <%= form.select :packaging, Drink.packagings %>
+  </div>
+  <br>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
