@@ -10,18 +10,20 @@
     <%= form.text_field :name %>
   </div>
 
-  <br>
-  <div>
-    <%= form.label :unit %><br>
-    <%= form.text_field :unit %>
-  </div>
+  <%= form.fields_for :unit do |unit_subform| %>
+    <br>
+    <div>
+      <%= form.label :unit %><br>
+      <%= form.text_field :unit %>
+    </div>
 
-  <div>
-    <%= form.label :packaging %><br>
-    <%= form.select :packaging, Drink.packagings %>
-  </div>
-  <br>
+    <div>
+      <%= form.label :packaging %><br>
+      <%= form.select :packaging, Drink.packagings %>
+    </div>
+  <% end %>
 
+  <br>
   <div>
     <%= form.submit %>
   </div>
