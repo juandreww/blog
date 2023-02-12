@@ -13,13 +13,13 @@
   <%= form.fields_for :unit do |unit_subform| %>
     <br>
     <div>
-      <%= form.label :unit %><br>
-      <%= form.text_field :unit %>
+      <%= unit_subform.label :unit %><br>
+      <%= unit_subform.text_field :unit %>
     </div>
 
     <div>
-      <%= form.label :packaging %><br>
-      <%= form.select :packaging, Drink.packagings %>
+      <%= unit_subform.label :packaging %><br>
+      <%= unit_subform.select :packaging, Drink.packagings %>
     </div>
   <% end %>
 

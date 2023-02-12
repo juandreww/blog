@@ -21,9 +21,10 @@ class DrinksController < ApplicationController
   private
 
   def create_params
-    @create_params ||= params["drink"].permit(:brand, :name, :unit, :packaging)
+    @create_params ||= params["drink"].permit(:brand, :name, unit: %i[unit packaging])
 
-    @create_params["packaging"] = @create_params["packaging"].to_i
+    @create_params["packaging"] = @create_params["unit"]["packaging"].to_i
+    @create_params["unit"] = @create_params["unit"]["unit"].to_i
 
     @create_params
   end
